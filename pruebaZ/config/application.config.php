@@ -10,7 +10,8 @@ return array(
         'Application',
         'Modulo',
         'Visitar',
-        'Programa'
+        'Programa',
+        'Mod5'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
