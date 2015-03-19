@@ -24,4 +24,8 @@ class MoeliController extends AbstractActionController
         // are working when you browse to /module-specific-root/skeleton/foo
         return array();
     }
+    public function holaAction()
+    {
+        return array("hi"=>"Hola desde mi modulo");
+    }
 }

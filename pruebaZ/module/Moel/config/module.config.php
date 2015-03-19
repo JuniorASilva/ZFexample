@@ -8,6 +8,31 @@ return array(
     'router' => array(
         'routes' => array(
             'moel' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/moel',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Moel\Controller',
+                        'controller'    => 'Moeli',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+                /*
                 'type'    => 'Segment',
                         'options' => array(
                             'route'    => '/moel[/:action]',
@@ -18,8 +43,9 @@ return array(
                                 'controller'=>'Moel\Controller\Moeli',
                                 'action'    =>'index',
                             ),
-                        ),
+                        ),*/
             ),
+
         ),
     ),
     'view_manager' => array(

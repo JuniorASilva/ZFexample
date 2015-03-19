@@ -11,6 +11,7 @@ namespace Modulo\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+//use Modelo\Model\Entity\Modelo;
 
 class PruebaController extends AbstractActionController
 {
@@ -18,5 +19,9 @@ class PruebaController extends AbstractActionController
     {
     	$data= array("holamundo"=>"Hola junior desde Zend2");
         return new ViewModel($data);
+    }
+    public function HolaAction(){
+    	$data = array("hi"=>"Hola desde mi modelo");
+    	return new ViewModel($data);
     }
 }

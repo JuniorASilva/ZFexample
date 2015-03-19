@@ -8,7 +8,32 @@ return array(
     'router' => array(
         'routes' => array(
         	'visitar' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/visitar',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Visitar\Controller',
+                        'controller'    => 'Visitar',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
                         'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action][/:id]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'         => '[a-zA-Z0-9]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+                        /*'type'    => 'Segment',
                         'options' => array(
                             'route'    => '/visitar[/:action][/:id]',
                             'constraints' => array(
@@ -19,7 +44,7 @@ return array(
                             	'controller'=>'Visitar\Controller\Visitar',
                             	'action'	=>'index',
                             ),
-                        ),
+                        ),*/
                     ),
             ),
         ),
