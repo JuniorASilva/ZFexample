@@ -11,8 +11,8 @@ namespace Modulo\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-//use Modulo\Model\Entity\Modelo;
-//use Modulo\Form\FormularioPruebas;
+use Modulo\Model\Entity\Modelo;
+use Modulo\Form\FormularioPruebas;
 
 class PruebaController extends AbstractActionController
 {
@@ -37,7 +37,7 @@ class PruebaController extends AbstractActionController
 	    'url'=>$this->getRequest()->getBaseUrl()
 	));
     }
-    public funtion recibitFormularioAction(){
+    public function recibitFormularioAction(){
 	//este metodo se encarga de recojer los datos de el formulario
 	//si a sido enviado y si redirecciona al formulario
 
