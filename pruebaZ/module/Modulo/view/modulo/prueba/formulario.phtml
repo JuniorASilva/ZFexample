@@ -35,6 +35,7 @@ echo $this->form()->openTag($form);
 ?>
 </div>
 <?php
+echo $this->formElement($form->get('captcha'));
 //imprime el boton submit
 echo $this->formElement($form->get('submit'));
 

@@ -22,7 +22,11 @@ class FormularioPruebas extends Form
 				'type'=>'text',
 				'class'=>'input'
 			),
-		));/*
+		));
+		$captcha = new Element\Captcha('captcha');
+		$captcha->setCaptcha(new Captcha\Dumb());
+		$captcha->setLabel('Please verify you are human');
+		$this->add($captcha);/*
 		$factory=new Factory();
 
 		//creando elementos de una manera similar a la anterior
