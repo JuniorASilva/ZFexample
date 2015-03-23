@@ -8,7 +8,8 @@ use Zend\Form\Form;
 use Zend\Captcha;
 use Zend\Form\Factory;
 
-class FormularioPruebas extends Form{
+class FormularioPruebas extends Form
+{
 	public function __construct($name = null){
 		parent::__construct($name);
 		//podemos añadir campos al formulario de esta forma
@@ -21,7 +22,7 @@ class FormularioPruebas extends Form{
 				'type'=>'text',
 				'class'=>'input'
 			),
-		));
+		));/*
 		$factory=new Factory();
 
 		//creando elementos de una manera similar a la anterior
@@ -29,14 +30,14 @@ class FormularioPruebas extends Form{
 			'type'=>'Zend\Form\Element\Email',
 			'name'=>'email',
 			'options'=>array(
-				'label'=>'Email:'
+				'label'=>'Email:',
 			),
 			'attributes'=>array(
 				'class'=>'input_email',
 				'id'=>'input_email'
 			),
 		));
-		$this->add($email);
+		$this->add($email);*/
 
 		//Creamos el boton submit
 		$this->add(array(
@@ -45,7 +46,7 @@ class FormularioPruebas extends Form{
 				'type'=>'submit',
 				'value'=>'Enviar',
 				'title'=>'Enviar'
-			),
+			)
 		));
 	}
 }

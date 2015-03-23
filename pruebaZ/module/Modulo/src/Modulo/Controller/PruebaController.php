@@ -26,7 +26,7 @@ class PruebaController extends AbstractActionController
     	$data = array("hi"=>"Hola desde mi modelo","mod"=>$mode->getTexto());
     	return new ViewModel($data);
     }
-    public function  formularioAction(){
+    public function formularioAction(){
 	//creamos el objeto del formulario
 	$form=new FormularioPruebas("form");
 
@@ -34,10 +34,10 @@ class PruebaController extends AbstractActionController
 	return new ViewModel(array(
 	    'titulo'=>'Formularios en ZF2',
 	    'form'=>$form,
-	    'url'=>$this->getRequest()->getBaseUrl()
+	    'url'=>$this->getRequest()->getBaseUrl(),
 	));
     }
-    public function recibitFormularioAction(){
+    public function recibirormularioAction(){
 	//este metodo se encarga de recojer los datos de el formulario
 	//si a sido enviado y si redirecciona al formulario
 
@@ -46,7 +46,7 @@ class PruebaController extends AbstractActionController
 		return new ViewModel(array('titulo'=>'Recibir datos via POST EN ZF2','datos'=>$datos));
 	}else{
 		return $this->redirect()->toUrl(
-			$this->getRequest()->getBaseUrl().'/modulo/formulario'
+			$this->getRequest()->getBaseUrl().'/modulo/prueba/formulario'
 		);
 	}
     }

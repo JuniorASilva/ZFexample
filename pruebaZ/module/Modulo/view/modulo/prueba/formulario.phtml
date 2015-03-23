@@ -5,7 +5,7 @@ $form=$this->form;
 $form->prepare();
 //Definimos el atributo action y method
 $form->setAttributes(array(
-	'action'=>$this->url.'/modulo/recibirformulario',
+	'action'=>$this->url.'/modulo/prueba/recibirormulario',
 	'method'=>'post'
 ));
 
@@ -22,7 +22,7 @@ echo $this->form()->openTag($form);
 	echo $formLabel->openTag().$nombre->getOption('label')." ";
 	echo $this->formInput($nombre);
 	echo $formLabel->closeTag();
-?>
+/*?>
 </div>
 
 <div class='form_element'>
@@ -31,7 +31,7 @@ echo $this->form()->openTag($form);
 	$email = $form->get('email');
 	echo $formLabel->openTag().$email->getOption('label')." ";
 	echo $this->formInput($email);
-	echo $formLabel->closeTag();
+	echo $formLabel->closeTag();*/
 ?>
 </div>
 <?php
