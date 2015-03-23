@@ -26,7 +26,20 @@ class FormularioPruebas extends Form
 		$captcha = new Element\Captcha('captcha');
 		$captcha->setCaptcha(new Captcha\Dumb());
 		$captcha->setLabel('Please verify you are human');
-		$this->add($captcha);/*
+		$this->add($captcha);
+
+		$this->add(array(
+			'name'=>'email',
+			'options'=>array(
+				'label'=>'Email: ',
+				),
+			'attributes'=>array(
+				'type'=>'text',
+				'class'=>'input',
+				'id'=>'campito',
+				),
+			));
+		/*
 		$factory=new Factory();
 
 		//creando elementos de una manera similar a la anterior
