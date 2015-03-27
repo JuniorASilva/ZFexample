@@ -8,13 +8,16 @@ use Zend\Form\Form;
 use Zend\Captcha;
 use Zend\Form\Factory;
 
+use Modulo\Form\FormularioPruebasValidator;
+
 class FormularioPruebas extends Form
 {
 	public function __construct($name = null){
 		parent::__construct($name);
 		//podemos añadir campos al formulario de esta forma
+		//$this->setInputFilter(new FormularioPruebasValidator());
 		$this->add(array(
-			'name'=>'nombre',
+			'name'=>'txtNombre',
 			'options'=>array(
 				'label'=>'Nombre:',
 			),
@@ -29,7 +32,7 @@ class FormularioPruebas extends Form
 		$this->add($captcha);
 
 		$this->add(array(
-			'name'=>'email',
+			'name'=>'txtEmail',
 			'options'=>array(
 				'label'=>'Email: ',
 				),

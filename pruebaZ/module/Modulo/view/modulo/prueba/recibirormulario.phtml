@@ -1,8 +1,10 @@
 <h1><?php echo $this->titulo?></h1>
 
 <ul>
-	<li> <?php echo $this->datos->nombre?></li>
-	<li>Email: <?php echo $this->datos->email?></li>
+	<li> <?php echo $this->datos->txtNombre?></li>
+	<li>Email: <?php echo $this->datos->txtEmail?>
+		<br>
+		<span><?php print_r($this->mensaje);?></span>
+	</li>
 </ul>
 <br>
-<?php print_r($datos);?>

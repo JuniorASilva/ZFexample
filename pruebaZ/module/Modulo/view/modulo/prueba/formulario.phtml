@@ -6,19 +6,21 @@ $form->prepare();
 //Definimos el atributo action y method
 $form->setAttributes(array(
 	'action'=>$this->url.'/modulo/prueba/recibirormulario',
-	'method'=>'post'
+	'method'=>'POST'
 ));
 
 //Uilizamos el plugin para mostrar los label
+
 $formLabel = $this->plugin('formLabel');
 
 echo $this->form()->openTag($form);
+
 ?>
 
 <div class='form_element'>
 <?php
 	//imprime el campo nombre
-	$nombre=$form->get('nombre');
+	$nombre=$form->get('txtNombre');
 	echo $formLabel->openTag().$nombre->getOption('label')." ";
 	echo $this->formInput($nombre);
 	echo $formLabel->closeTag();
@@ -27,7 +29,7 @@ echo $this->form()->openTag($form);
 <div class="form_element">
 <?php
 	//imprime el campo email con modificaciones
-	$email=$form->get('email');
+	$email=$form->get('txtEmail');
 	echo $formLabel->openTag().$email->getOption('label')." ";
 	echo $this->formInput($email);
 	echo $formLabel->closeTag();
@@ -44,7 +46,10 @@ echo $this->form()->openTag($form);
 ?>
 </div>
 <?php
-echo $this->formElement($form->get('captcha'));
+
+
+//echo $this->formElement($form->get('nombre'));
+//echo $this->formElement($form->get('email'));
 //imprime el boton submit
 echo $this->formElement($form->get('submit'));
 

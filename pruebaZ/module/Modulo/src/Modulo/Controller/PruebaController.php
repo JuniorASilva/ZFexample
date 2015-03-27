@@ -11,8 +11,10 @@ namespace Modulo\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Modulo\Model\Entity\Modelo;
+
 use Modulo\Form\FormularioPruebas;
+//use Zend\Validator;
+//use Zend\I18n\Validator as I18nValidator;
 
 class PruebaController extends AbstractActionController
 {
@@ -26,28 +28,33 @@ class PruebaController extends AbstractActionController
     	$data = array("hi"=>"Hola desde mi modelo","mod"=>$mode->getTexto());
     	return new ViewModel($data);
     }
-    public function formularioAction(){
-	//creamos el objeto del formulario
-	$form=new FormularioPruebas("form");
+    public function formularioAction()
+    {
 
-	//le pasamos a la vista el formulario
-	return new ViewModel(array(
-	    'titulo'=>'Formularios en ZF2',
-	    'form'=>$form,
-	    'url'=>$this->getRequest()->getBaseUrl(),
-	));
+    	//creamos el objeto del formulario
+    	$form=new FormularioPruebas("form");
+
+    	//le pasamos a la vista el formulario
+    	return new ViewModel(array(
+    	    'titulo'=>'Formularios en ZF2',
+    	    'form'=>$form,
+    	    'url'=>$this->getRequest()->getBaseUrl(),
+    	));
     }
     public function recibirormularioAction(){
 	//este metodo se encarga de recojer los datos de el formulario
 	//si a sido enviado y si redirecciona al formulario
 
-	if($this->request->getPost('submit')){
-		$datos=$this->request->getPost();
-		return new ViewModel(array('titulo'=>'Recibir datos via POST EN ZF2','datos'=>$datos));
-	}else{
-		return $this->redirect()->toUrl(
-			$this->getRequest()->getBaseUrl().'/modulo/prueba/formulario'
-		);
-	}
+    	if($this->request->getPost('submit')){
+    		$datos=$this->request->getPost();
+            $men='El correo ';
+            if($datos->isValid()) {$men = $men . 'es valido';}
+            else {$men = $datos->getMessages();}
+    		return new ViewModel(array('titulo'=>'Recibir datos via POST EN ZF2','datos'=>$datos,'mensaje'=>$men));
+    	}else{
+    		return $this->redirect()->toUrl(
+    			$this->getRequest()->getBaseUrl().'/modulo/prueba/formulario'
+    		);
+    	}
     }
 }
