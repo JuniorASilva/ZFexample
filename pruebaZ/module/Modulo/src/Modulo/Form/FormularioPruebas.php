@@ -7,6 +7,7 @@ use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\Captcha;
 use Zend\Form\Factory;
+use Zend\InputFilter\InputFilter;
 
 use Modulo\Form\FormularioPruebasValidator;
 
@@ -15,7 +16,7 @@ class FormularioPruebas extends Form
 	public function __construct($name = null){
 		parent::__construct($name);
 		//podemos añadir campos al formulario de esta forma
-		//$this->setInputFilter(new FormularioPruebasValidator());
+		$this->setInputFilter(new FormularioPruebasValidator());
 		$this->add(array(
 			'name'=>'txtNombre',
 			'options'=>array(

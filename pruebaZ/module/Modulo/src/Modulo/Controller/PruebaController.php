@@ -13,7 +13,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Modulo\Form\FormularioPruebas;
-//use Zend\Validator;
+use Zend\Validator\EmailAddress;
 //use Zend\I18n\Validator as I18nValidator;
 
 class PruebaController extends AbstractActionController
@@ -48,8 +48,9 @@ class PruebaController extends AbstractActionController
     	if($this->request->getPost('submit')){
     		$datos=$this->request->getPost();
             $men='El correo ';
-            if($datos->isValid()) {$men = $men . 'es valido';}
-            else {$men = $datos->getMessages();}
+            $val=new EmailAddress();
+            if($val->isValid($datos)) {$men = $men . 'es valido';}
+            else {$men = $val->getMessages();}
     		return new ViewModel(array('titulo'=>'Recibir datos via POST EN ZF2','datos'=>$datos,'mensaje'=>$men));
     	}else{
     		return $this->redirect()->toUrl(

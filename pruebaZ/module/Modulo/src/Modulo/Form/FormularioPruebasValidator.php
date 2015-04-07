@@ -4,7 +4,7 @@ namespace Modulo\Form;
 
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilter;
-use Zend\Validator;
+use Zend\Validator\EmailAddress;
 use Zend\I18n\Validator as I18nValidator;
 
 class FormularioPruebasValidator extends InputFilter
@@ -25,14 +25,16 @@ class FormularioPruebasValidator extends InputFilter
                         array(
                             'name' => 'EmailAddress',
                             'options' => array(
+                                'allowWhiteSpace'=>true,
                                 'messages' => array(
+                                    EmailAddress::INVALID => 'Ingresa un buen email mrd',
                                     EmailAddress::INVALID_FORMAT => 'Email incorrecto',
                                     EmailAddress::INVALID_HOSTNAME => 'Dominio incorrecto',
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
+                                )
+                            )
+                        )
+                    )
+                )
         );
         //-- Validacion de Nombres
         $this->add(
