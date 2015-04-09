@@ -14,7 +14,7 @@ use Zend\View\Model\ViewModel;
 
 
 use Modulo\Form\FormularioPruebas;
-use Zend\Validator;
+use Zend\Validator\EmailAddress;
 //use Modulo\Form\FormularioPruebasValidator;
 use Zend\I18n\Validator as I18nValidator;
 use Zend\I18n\Validator\Alnum;
