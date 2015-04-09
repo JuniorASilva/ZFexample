@@ -58,4 +58,18 @@ class PruebaController extends AbstractActionController
     		);
     	}
     }
+    public function validcorreoAction(){
+        $validator = new EmailAddress();
+
+        if ($validator->isValid('jsilvap22@gmail.com')) {
+            // email appears to be valid
+        } else {
+            // email is invalid; print the reasons
+            $valida = $validator->getMessages();
+    //        foreach ($validator->getMessages() as $messageId => $message) {
+    //            echo "Validation failure '$messageId': $message\n";
+    //        }
+        }
+        return new ViewModel(array('error'=>$valida));
+    }
 }
