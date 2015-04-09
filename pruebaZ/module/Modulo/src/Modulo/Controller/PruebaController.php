@@ -14,6 +14,7 @@ use Zend\View\Model\ViewModel;
 
 use Modulo\Form\FormularioPruebas;
 use Zend\Validator\EmailAddress;
+use Zend\Validator\StringLength;
 //use Zend\I18n\Validator as I18nValidator;
 
 class PruebaController extends AbstractActionController
@@ -61,7 +62,8 @@ class PruebaController extends AbstractActionController
     public function validcorreoAction(){
         $validator = new EmailAddress();
 
-        if ($validator->isValid('jsilvap22@gmail.com')) {
+        $validator->setMessage('pon un buen correo',EmailAddress::INVALID_FORMAT);
+        if ($validator->isValid('jsilvap22gmail.com')) {
             // email appears to be valid
         } else {
             // email is invalid; print the reasons
@@ -71,5 +73,14 @@ class PruebaController extends AbstractActionController
     //        }
         }
         return new ViewModel(array('error'=>$valida));
+    }
+    public function validlongitudAction(){
+        $validator = new StringLength(8);
+        $validator->setMessage('muy corto',StringLength::TOO_SHORT);
+        if (!$validator->isValid('silva')) {
+            $messages = $validator->getMessages();
+            
+        }
+        return new ViewModel(array('error'=>$messages));
     }
 }
