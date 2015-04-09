@@ -12,10 +12,11 @@ namespace Modulo\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
+
 use Modulo\Form\FormularioPruebas;
-use Zend\Validator\EmailAddress;
-use Zend\Validator\StringLength;
-//use Zend\I18n\Validator as I18nValidator;
+use Zend\Validator;
+//use Modulo\Form\FormularioPruebasValidator;
+use Zend\I18n\Validator as I18nValidator;
 
 class PruebaController extends AbstractActionController
 {
@@ -29,6 +30,21 @@ class PruebaController extends AbstractActionController
     	$data = array("hi"=>"Hola desde mi modelo","mod"=>$mode->getTexto());
     	return new ViewModel($data);
     }
+
+    public function validatoAction(){
+        $valid = new FormularioPruebasValidator();
+        if ($valid->isValid('jsilvap22gmail.com')) {
+            // email appears to be valid
+        } else {
+            // email is invalid; print the reasons
+            $valida = $valid->getMessages();
+    //        foreach ($validator->getMessages() as $messageId => $message) {
+    //            echo "Validation failure '$messageId': $message\n";
+    //        }
+        }
+        return new ViewModel(array('error'=>$valida));
+    }
+
     public function formularioAction()
     {
 
@@ -45,13 +61,14 @@ class PruebaController extends AbstractActionController
     public function recibirormularioAction(){
 	//este metodo se encarga de recojer los datos de el formulario
 	//si a sido enviado y si redirecciona al formulario
+        $form=new FormularioPruebas("form");
 
     	if($this->request->getPost('submit')){
-    		$datos=$this->request->getPost();
+    		$form->setData($this->request->getPost());
             $men='El correo ';
-            $val=new EmailAddress();
-            if($val->isValid($datos)) {$men = $men . 'es valido';}
-            else {$men = $val->getMessages();}
+            //$val=new FormularioPruebasValidator();
+            if($form->isValid()) {$men = $men . 'es valido';}
+            else {$men = $form->getMessages();}
     		return new ViewModel(array('titulo'=>'Recibir datos via POST EN ZF2','datos'=>$datos,'mensaje'=>$men));
     	}else{
     		return $this->redirect()->toUrl(
@@ -59,6 +76,7 @@ class PruebaController extends AbstractActionController
     		);
     	}
     }
+    //valida un correo y se le puede asiganar un mensaje
     public function validcorreoAction(){
         $validator = new EmailAddress();
 
@@ -74,6 +92,7 @@ class PruebaController extends AbstractActionController
         }
         return new ViewModel(array('error'=>$valida));
     }
+    //Valida la longitud de caracteres 
     public function validlongitudAction(){
         $validator = new StringLength(8);
         $validator->setMessage('muy corto',StringLength::TOO_SHORT);

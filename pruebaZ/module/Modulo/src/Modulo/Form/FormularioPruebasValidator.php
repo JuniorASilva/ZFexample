@@ -16,7 +16,6 @@ class FormularioPruebasValidator extends InputFilter
         $this->add(
                 array(
                     'name' => 'txtEmail',
-                    'required' => TRUE,
                     'filters' => array(
                         array('name' => 'StripTags'),
                         array('name' => 'StringTrim'),
@@ -40,7 +39,6 @@ class FormularioPruebasValidator extends InputFilter
         $this->add(
                 array(
                     'name' => 'txtNombre',
-                    'required' => TRUE,
                     'validators' => array(
                         array(
                             'name' => 'Alnum',

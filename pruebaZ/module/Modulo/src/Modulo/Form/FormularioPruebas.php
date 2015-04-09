@@ -7,9 +7,10 @@ use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\Captcha;
 use Zend\Form\Factory;
-use Zend\InputFilter\InputFilter;
+//use Zend\InputFilter\InputFilter;
 
 use Modulo\Form\FormularioPruebasValidator;
+
 
 class FormularioPruebas extends Form
 {
