@@ -17,6 +17,7 @@ use Modulo\Form\FormularioPruebas;
 use Zend\Validator;
 //use Modulo\Form\FormularioPruebasValidator;
 use Zend\I18n\Validator as I18nValidator;
+use Zend\I18n\Validator\Alnum;
 
 class PruebaController extends AbstractActionController
 {
@@ -102,4 +103,17 @@ class PruebaController extends AbstractActionController
         }
         return new ViewModel(array('error'=>$messages));
     }
+    //validador alnum
+    public function validalnumAction(){
+        $validator = new Alnum();
+        $men = '';
+        if ($validator->isValid('Abcd12')) {
+            $men = 'Abcd12'. "<br>es valido";
+                // value contains only allowed chars
+            } else {
+                $men = 'Abcd12'."<br>no es valido";
+                // false
+            }
+        return new ViewModel(array('error'=>$men));
+        }
 }
