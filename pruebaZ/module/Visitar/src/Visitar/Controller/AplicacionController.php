@@ -13,6 +13,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 use Zend\I18n\Validator\Alpha;
+use Zend\Validator\Hostname;
 
 class AplicacionController extends AbstractActionController
 {
@@ -30,6 +31,17 @@ class AplicacionController extends AbstractActionController
     		$men = $cad."<br>Es valido";
     	}else{
     		$men = $cad."<br>No es valido";
+    	}
+    	return new ViewModel(array('error'=>$men));
+    }
+    //valida ip
+    public function validhostnameAction(){
+    	$vali = new Hostname(Hostname::ALLOW_IP);
+    	$host = '1925::0005';
+    	if($vali->isValid($host)){
+    		$men = $host.'<br>host valido';
+    	}else{
+    		$men = $host.'<br>host no valido';
     	}
     	return new ViewModel(array('error'=>$men));
     }
