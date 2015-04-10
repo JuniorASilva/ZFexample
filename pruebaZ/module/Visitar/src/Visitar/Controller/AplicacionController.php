@@ -14,6 +14,7 @@ use Zend\View\Model\ViewModel;
 
 use Zend\I18n\Validator\Alpha;
 use Zend\Validator\Hostname;
+use Zend\Validator\NotEmpty;
 
 class AplicacionController extends AbstractActionController
 {
@@ -37,11 +38,22 @@ class AplicacionController extends AbstractActionController
     //valida ip
     public function validhostnameAction(){
     	$vali = new Hostname(Hostname::ALLOW_IP);
-    	$host = '1925::0005';
+    	$host = '192.23.56.5';
     	if($vali->isValid($host)){
     		$men = $host.'<br>host valido';
     	}else{
-    		$men = $host.'<br>host no valido';
+    		$men = $vali->getMessages();
+    	}
+    	return new ViewModel(array('error'=>$men));
+    }
+    //validacion notEmpty
+    public function validnotemptyAction(){
+    	$valid = new NotEmpty();
+    	$cad = '54afd65';
+    	if($valid->isValid($cad)){
+    		$men = $cad.'<br>Cadena no vacia';
+    	}else{
+    		$men = $valid->getMessages();
     	}
     	return new ViewModel(array('error'=>$men));
     }
