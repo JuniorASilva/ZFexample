@@ -15,9 +15,11 @@ use Zend\View\Model\ViewModel;
 
 use Modulo\Form\FormularioPruebas;
 use Zend\Validator\EmailAddress;
-//use Modulo\Form\FormularioPruebasValidator;
+use Zend\Validator\StringLength;
+use Modulo\Form\FormularioPruebasValidator;
 use Zend\I18n\Validator as I18nValidator;
 use Zend\I18n\Validator\Alnum;
+//use Zend\I18n\Validator\StringLength;
 
 class PruebaController extends AbstractActionController
 {
@@ -65,7 +67,8 @@ class PruebaController extends AbstractActionController
         $form=new FormularioPruebas("form");
 
     	if($this->request->getPost('submit')){
-    		$form->setData($this->request->getPost());
+            $datos = $this->request->getPost();
+    		$form->setData($datos);
             $men='El correo ';
             //$val=new FormularioPruebasValidator();
             if($form->isValid()) {$men = $men . 'es valido';}
@@ -98,8 +101,7 @@ class PruebaController extends AbstractActionController
         $validator = new StringLength(8);
         $validator->setMessage('muy corto',StringLength::TOO_SHORT);
         if (!$validator->isValid('silva')) {
-            $messages = $validator->getMessages();
-            
+            $messages = $validator->getMessages();            
         }
         return new ViewModel(array('error'=>$messages));
     }
@@ -107,11 +109,12 @@ class PruebaController extends AbstractActionController
     public function validalnumAction(){
         $validator = new Alnum();
         $men = '';
-        if ($validator->isValid('Abcd12')) {
-            $men = 'Abcd12'. "<br>es valido";
+        $cadena = 'Abcd12+}}';
+        if ($validator->isValid($cedena)) {
+            $men = $cadena. "<br>es valido";
                 // value contains only allowed chars
             } else {
-                $men = 'Abcd12'."<br>no es valido";
+                $men = $cadena."<br>no es valido";
                 // false
             }
         return new ViewModel(array('error'=>$men));

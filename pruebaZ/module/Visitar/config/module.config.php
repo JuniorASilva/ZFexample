@@ -3,6 +3,7 @@ return array(
 	'controllers' => array(
         'invokables' => array(
             'Visitar\Controller\Visitar' => 'Visitar\Controller\VisitarController',
+            'Visitar\Controller\Aplicacion' => 'Visitar\Controller\AplicacionController',
         ),
     ),
     'router' => array(
@@ -33,18 +34,6 @@ return array(
                         ),
                     ),
                 ),
-                        /*'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/visitar[/:action][/:id]',
-                            'constraints' => array(
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'id'		 => '[a-zA-Z0-9]*',
-                            ),
-                            'defaults' => array(
-                            	'controller'=>'Visitar\Controller\Visitar',
-                            	'action'	=>'index',
-                            ),
-                        ),*/
                     ),
             ),
         ),
