@@ -29,4 +29,17 @@ class ConexionTable extends TableGateway{
 		return $result[0];
 	}
 
+	public function setUsuario($nombre,$email){
+		$sql = new Sql($this->dbAdapter);
+		$insert = $sql->insert('Usuario');
+		$registro=array(
+			'id'=>3,
+			'nombre'=>$nombre,
+			'email'=>$email
+			);
+		$insert->values($registro);
+		$selectString = $sql->getSqlStringForSqlObject($insert);
+		$this->dbAdapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
+	}
+
 }

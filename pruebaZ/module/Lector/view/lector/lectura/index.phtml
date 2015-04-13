@@ -1,4 +1,39 @@
 <?php
-echo $this->hola.'<br>';
-print_r($usu);
+
+$form=$this->form;
+$form->prepare();
+//Definimos el atributo action y method
+$form->setAttributes(array(
+	'action'=>$this->url.'/lector/lectura/insercion',
+	'method'=>'POST'
+));
+
+//Uilizamos el plugin para mostrar los label
+
+$formLabel = $this->plugin('formLabel');
+
+echo $this->form()->openTag($form);
+?>
+
+<div class='form_element'>
+<?php
+	//imprime el campo nombre
+	$nombre=$form->get('txtNombre');
+	echo $formLabel->openTag().$nombre->getOption('label')." ";
+	echo $this->formInput($nombre);
+	echo $formLabel->closeTag();
+?>
+</div>
+<div class="form_element">
+<?php
+	//imprime el campo email con modificaciones
+	$email=$form->get('txtEmail');
+	echo $formLabel->openTag().$email->getOption('label')." ";
+	echo $this->formInput($email);
+	echo $formLabel->closeTag();
+?>
+</div>
+
+<?php
+echo $this->formElement($form->get('submit'));
 ?>

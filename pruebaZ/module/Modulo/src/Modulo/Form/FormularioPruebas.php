@@ -6,7 +6,6 @@ use Zend\Captcha\AdapterInterface as CaptchaAdapter;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\Captcha;
-use Zend\Form\Factory;
 //use Zend\InputFilter\InputFilter;
 
 use Modulo\Form\FormularioPruebasValidator;
