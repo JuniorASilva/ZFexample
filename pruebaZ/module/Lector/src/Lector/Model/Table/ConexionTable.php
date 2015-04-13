@@ -33,7 +33,6 @@ class ConexionTable extends TableGateway{
 		$sql = new Sql($this->dbAdapter);
 		$insert = $sql->insert('Usuario');
 		$registro=array(
-			'id'=>3,
 			'nombre'=>$nombre,
 			'email'=>$email
 			);
