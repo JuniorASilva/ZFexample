@@ -43,5 +43,14 @@ class FormularioUsuario extends Form{
 				'title'=>'Enviar'
 			)
 		));
+		$this->add(array(
+			'name'=>'modificar',
+			'attributes'=>array(
+				'class'=>'btn btn-success',
+				'type'=>'submit',
+				'value'=>'Modificar',
+				'title'=>'Enviar'
+			)
+		));
 	}
 }

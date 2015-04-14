@@ -1,0 +1,49 @@
+<?php
+$flash=$this->flashMessenger()
+            ->setMessageOpenFormat('<div%s>')
+            ->setMessageSeparatorString('')
+            ->setMessageCloseString('</div>');
+
+$form=$this->form;
+$form->prepare();
+//Definimos el atributo action y method
+$form->setAttributes(array(
+	'action'=>$this->url.'/lector/lectura/modificar/'.$this->id,
+	'method'=>'POST'
+));
+
+//Uilizamos el plugin para mostrar los label
+
+$formLabel = $this->plugin('formLabel');
+
+echo $this->form()->openTag($form);
+?>
+
+<div class='form_element'>
+<?php
+	//imprime el campo nombre
+	$nombre=$form->get('txtNombre');
+	$nombre->setValue($datos[0]['nombre']);
+	echo $formLabel->openTag().$nombre->getOption('label')." ";
+	echo $this->formInput($nombre);
+	echo $formLabel->closeTag();
+?>
+</div>
+<div class="form_element">
+<?php
+	//imprime el campo email con modificaciones
+	$email=$form->get('txtEmail');
+	$email->setValue($datos[0]['email']);
+	echo $formLabel->openTag().$email->getOption('label')." ";
+	echo $this->formInput($email);
+	echo $formLabel->closeTag();
+?>
+</div>
+
+<?php
+echo $this->formElement($form->get('modificar'));
+?>
+<a class="btn btn-success" href="<?=$this->basePath()?>/lector/lectura/listar">Listar</a>
+<?php
+echo $flash->render('add_correcto',array('btn', 'btn-success'));
+?>

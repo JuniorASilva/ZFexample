@@ -1,0 +1,28 @@
+<?php
+
+namespace Lector\Controller;
+
+use Zend\Form\Form;
+use Zend\InputFilter\InputFilter;
+use Zend\Validator;
+use Zend\I18n\Validator as I18nValidator;
+
+class FormularioUsuarioValidator extends InputFilter{
+	public function __construct(){
+		$this->add(array(
+			'name'=>'txtNombre',
+			'required'=>true,
+			'filters'=>arary(
+					array('name'=>'StripTags'),
+					array('name'=>'StringTrim'),
+				),
+			'validators'=>array(
+					array(
+						'name'=>'StringLength',
+						options'=>array(
+						),
+					),
+				),
+			));
+	}
+}
