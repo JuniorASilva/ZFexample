@@ -37,6 +37,7 @@ class FormularioUsuario extends Form{
 		$this->add(array(
 			'name'=>'submit',
 			'attributes'=>array(
+				'class'=>'btn btn-success',
 				'type'=>'submit',
 				'value'=>'Insertar',
 				'title'=>'Enviar'
