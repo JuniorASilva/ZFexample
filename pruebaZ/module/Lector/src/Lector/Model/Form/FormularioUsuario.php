@@ -4,9 +4,16 @@ namespace Lector\Model\Form;
 
 use Zend\Form\Form;
 
+use Lector\Model\Form\FormularioUsuarioValidator;
+
 class FormularioUsuario extends Form{
 	public function __construct($name=null){
 		parent::__construct($name);
+
+		//insertamos el validator
+		$this->setInputFilter(new FormularioUsuarioValidator());
+
+		//armamos el formulario
 		$this->add(array(
 			'name'=>'txtNombre',
 			'options'=>array(

@@ -26,13 +26,13 @@ class ConexionTable extends TableGateway{
 		$selectString = $sql->getSqlStringForSqlObject($select);
 		$execute = $this->dbAdapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
 		$result=$execute->toArray();
-		return $result[0];
+		return $result;
 	}
 
 	public function setUsuario($nombre,$email){
 		$sql = new Sql($this->dbAdapter);
 		$insert = $sql->insert('Usuario');
-		$registro=array(
+		$registro = array(
 			'nombre'=>$nombre,
 			'email'=>$email
 			);
