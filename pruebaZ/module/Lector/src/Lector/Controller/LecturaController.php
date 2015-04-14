@@ -36,7 +36,9 @@ class LecturaController extends AbstractActionController
 		        $email=$this->request->getPost("txtEmail");
 		        $usuarios->setUsuario($nombre,$email);		
 				$data = array('hecho'=>"Insercion Satisfactoria");
-				return new ViewModel($data);
+				return $this->redirect()->toUrl(
+					$this->getRequest()->getBaseUrl().'/lector/lectura/listar'
+				);
 			}
 			else{
 				$men = $form->getMessages();
