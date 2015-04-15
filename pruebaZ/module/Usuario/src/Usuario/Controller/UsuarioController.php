@@ -13,6 +13,10 @@ use Zend\Authentication\AuthenticationService;
 use Zend\Authentication\Storage\Session as SessionStorage;
 use Zend\Session\Container;
 
+use Zend\Mail\Message;
+use Zend\Mail\Transport\Smtp as SmtpTransport;
+use Zend\Mail\Transport\SmtpOptions;
+
 //Incluir modelos
 //use Modulo\Model\Entity\UsuariosModel;
  
@@ -82,16 +86,46 @@ class UsuarioController extends AbstractActionController
             $datos=$identi;
             $sesion=new Container('sesion');
             $sesion->id = $datos->id;
+            $form=new FormularioUsuario("form");
+	$form->setAttributes(array(
+	'action'=>$this->getRequest()->getBaseUrl().'/usuario/usuario/envio',
+	'method'=>'POST'
+	));
          }else{
              $datos="No estas identificado";
          }
          return new ViewModel(
-                array("datos"=>$datos,'sesion'=>$sesion)
+                array("datos"=>$datos,'sesion'=>$sesion,'form'=>$form)
                 );
     }
     public function cerrarAction(){
         //Cerramos la sesión borrando los datos de la sesión.
         $this->auth->clearIdentity();
         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
+    }
+    public function envioAction(){
+    	$emisor = 'jsilvap22@gmail.com';
+    	$destinatario = 'soporteurbania@clicksandbrics.pe';
+
+    	$mensaje = new Message();
+    	$mensaje->addTo($destinatario)
+    			->addFrom($emisor)
+    			->addEncoding("UTF-8")
+    			->setSubject('Probando Zend Framework 2')
+    			->setBody('Estamos probando zf2');
+    	$transport = new SmtpTransport();
+    	$options = new SmtpOptions(array(
+    			'name'	=>	'smtp.gmail.com',
+    			'host'	=>	'smtp.gmail.com',
+    			'port'	=>	587,
+    			'connection_class' => 'login',
+    			'connection_config' => array(
+    					'username' => 'jsilvap22@gmail.com',
+    					'password' => 'junior943797547'
+    				),
+    		));
+    	$transport->setOptions($options);
+    	$transport->send($mensaje);
+    	return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/dentro');
     }
 }

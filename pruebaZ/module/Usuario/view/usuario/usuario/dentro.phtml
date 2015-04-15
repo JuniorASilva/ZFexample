@@ -15,4 +15,22 @@ echo "<br>Este es tu id de session";?><span class="label label-success"><?=$sesi
 }else{
     echo $this->datos;
 }
+$form = $this->form;
+$form->prepare();
+echo $this->form()->openTag($form);
+?>
+<div class="form_element">
+<?php
+    $email = $form->get('email');
+    echo "Correo: ".$this->formInput($email);
+    if(isset($error["email"])){
+      echo $error["email"]['emailAddressInvalidHostname'];
+    }
+?>
+</div>
+
+<?php
+echo $this->flashMessenger()->render();
+echo $this->formElement($form->get('submit'));
+echo $this->form()->closeTag();
 ?>
