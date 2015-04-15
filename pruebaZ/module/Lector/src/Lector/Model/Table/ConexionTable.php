@@ -21,7 +21,7 @@ class ConexionTable extends TableGateway{
 	public function getUsuario(){
 		$sql = new Sql($this->dbAdapter);
 		$select = $sql->select();
-		$select->columns(array('id','nombre', 'email','estado'))
+		$select->columns(array('id','nombre', 'email','estado', 'pasword'))
                ->from('Usuario');
 		$selectString = $sql->getSqlStringForSqlObject($select);
 		$execute = $this->dbAdapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);

@@ -11,7 +11,8 @@ return array(
         'Modulo',
         'Visitar',
         'Moel',
-        'Lector'
+        'Lector',
+        'Usuario'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
