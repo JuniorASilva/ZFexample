@@ -86,4 +86,9 @@ class UsuarioController extends AbstractActionController
                 array("datos"=>$datos)
                 );
     }
+    public function cerrarAction(){
+        //Cerramos la sesión borrando los datos de la sesión.
+        $this->auth->clearIdentity();
+        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
+    }
 }
