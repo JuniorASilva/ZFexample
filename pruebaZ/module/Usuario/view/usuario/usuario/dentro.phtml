@@ -4,7 +4,10 @@ if(!is_string($this->datos)){
 var_dump($this->datos->id);
 echo "Bienvenido ".$this->datos->nombre." ".$this->datos->apellido."<br/>";
 echo "Estas identificado con ".$this->datos->email;
+
+echo "<br>Este es tu id de session";?><span class="label label-success"><?=$sesion->id;
 ?>
+</span>
 <p>
     <a class="btn btn-success" href="<?=$this->basePath("usuario/usuario/cerrar")?>">Cerrar sesión</a>
 </p>  

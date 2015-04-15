@@ -70,20 +70,23 @@ class UsuarioController extends AbstractActionController
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/dentro');
            }
         }
-        return new ViewModel(
+        $view = new ViewModel(
                 array("form"=>$form)
                 );
+        return $view;
     }
     public function dentroAction(){
     //Leemos el contenido de la sesión
          $identi=$this->auth->getStorage()->read();
          if($identi!=false && $identi!=null){
             $datos=$identi;
+            $sesion=new Container('sesion');
+            $sesion->id = $datos->id;
          }else{
              $datos="No estas identificado";
          }
          return new ViewModel(
-                array("datos"=>$datos)
+                array("datos"=>$datos,'sesion'=>$sesion)
                 );
     }
     public function cerrarAction(){

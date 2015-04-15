@@ -1,3 +1,7 @@
+<?php
+    if (defined('RUNNING_FROM_ROOT')) {
+        $this->plugin('basePath')->setBasePath($this->basePath().'/public');
+} ?>
 	<h1>Login en Zend Framework 2</h1>
 <hr/>
 <?php
