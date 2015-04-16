@@ -41,7 +41,25 @@ echo $this->form()->openTag($form);
 <?php
 echo $this->formElement($form->get('submit'));
 ?>
-<a class="btn btn-success" href="<?=$this->basePath()?>/lector/lectura/listar">Listar</a>
+<a id="listar" class="btn btn-success" href="<?=$this->basePath()?>/lector/lectura/listar">Listar</a>
+<div id='usuarios'></div>
 <?php
 echo $flash->render('add_correcto',array('btn', 'btn-success'));
 ?>
+
+<script>
+	$(document).ready(function(){
+		$('#listar').click(function(){
+			$.ajax({
+				async: true,
+				type: 'POST',
+				url: '<?=$this->url."/lector/lectura/listar"?>',
+				success: function(data){
+					$('#usuarios').html(data);
+				}
+			});
+			return false;
+		});
+	}
+	);
+</script>
