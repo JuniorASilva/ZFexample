@@ -3,6 +3,7 @@
 ?>
 <table class="table">
 <?php
+echo $this->flashMessenger()->render();
 foreach ($this->lista as $usuario) {
 	if($usuario['estado']==1){
 	?>

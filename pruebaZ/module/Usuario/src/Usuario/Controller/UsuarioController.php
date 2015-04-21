@@ -69,6 +69,12 @@ class UsuarioController extends AbstractActionController
             // Le decimos al servicio que guarde en una sesión
             // el resultado del login cuando es correcto
             $auth->getStorage()->write($authAdapter->getResultRowObject());
+            $identi=$auth->getStorage()->read();
+            if($identi->estado==0){
+                $auth->getStorage()->write(false);
+                $this->flashMessenger()->addMessage("Usuario bloqueado consulte con su administrador");
+                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
+            }
 
             //Nos redirige a una pagina interior
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/dentro');
@@ -92,7 +98,7 @@ class UsuarioController extends AbstractActionController
 	'method'=>'POST'
 	));
          }else{
-             $datos="No estas identificado";
+            $datos="No estas identificado";
          }
          return new ViewModel(
                 array("datos"=>$datos,'sesion'=>$sesion,'form'=>$form)

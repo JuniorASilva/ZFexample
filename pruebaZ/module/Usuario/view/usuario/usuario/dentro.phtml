@@ -1,7 +1,7 @@
 <?php
 //Comprobamos si nos llega la sesión correcta o no, esto se puede hacer de distintas formas
 if(!is_string($this->datos)){
-var_dump($this->datos->id);
+//var_dump($this->datos->id);
 echo "Bienvenido ".$this->datos->nombre." ".$this->datos->apellido."<br/>";
 echo "Estas identificado con ".$this->datos->email;
 
@@ -15,6 +15,7 @@ echo "<br>Este es tu id de session";?><span class="label label-success"><?=$sesi
 }else{
     echo $this->datos;
 }
+/*
 $form = $this->form;
 $form->prepare();
 echo $this->form()->openTag($form);
@@ -33,4 +34,4 @@ echo $this->form()->openTag($form);
 echo $this->flashMessenger()->render();
 echo $this->formElement($form->get('submit'));
 echo $this->form()->closeTag();
-?>
+?>*/

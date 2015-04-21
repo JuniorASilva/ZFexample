@@ -34,15 +34,27 @@ class LecturaController extends AbstractActionController
 		        $usuarios = new ConexionTable($this->dbAdapter);
 		        $nombre=$this->request->getPost("txtNombre");
 		        $email=$this->request->getPost("txtEmail");
-		        $usuarios->setUsuario($nombre,$email);		
-				$data = array('hecho'=>"Insercion Satisfactoria");
-				return $this->redirect()->toUrl(
-					$this->getRequest()->getBaseUrl().'/lector/lectura/listar'
-				);
+		        $pasword=$this->request->getPost("pasword");
+		        if($usuarios->setUsuario($nombre,$email,$pasword)==1){
+		        	$this->flashMessenger()->addMessage("Usuario Insertado correctamente");
+				//$data = array('hecho'=>"Insercion Satisfactoria");
+					return $this->redirect()->toUrl(
+						$this->getRequest()->getBaseUrl().'/lector/lectura/listar'
+					);
+				}
+				else{
+					$this->flashMessenger()->addMessage("Usuario No Insertado");
+				//$data = array('hecho'=>"Insercion Satisfactoria");
+					return $this->redirect()->toUrl(
+						$this->getRequest()->getBaseUrl().'/lector/lectura/listar'
+					);
+				}
 			}
 			else{
-				$men = $form->getMessages();
-				return new ViewModel(array('error'=>$men));
+				$this->flashMessenger()->addMessage("Volver a ingresar datos");
+				return $this->redirect()->toUrl(
+    			$this->getRequest()->getBaseUrl().'/lector/lectura/index'
+    		);
 			}
 		}
 		else{
@@ -84,8 +96,9 @@ class LecturaController extends AbstractActionController
 				$usuarios = new ConexionTable($this->dbAdapter);
 				$nombre=$this->request->getPost("txtNombre");
 		        $email=$this->request->getPost("txtEmail");
+		        $pasword=$this->request->getPost("pasword");
 				$id=$this->params()->fromRoute("id",null);
-				$usuarios->modificar($nombre,$email,$id);
+				$usuarios->modificar($nombre,$email,$pasword,$id);
 				return $this->redirect()->toUrl(
 					$this->getRequest()->getBaseUrl().'/lector/lectura/listar'
 				);

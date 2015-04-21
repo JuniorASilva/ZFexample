@@ -3,7 +3,7 @@ $flash=$this->flashMessenger()
             ->setMessageOpenFormat('<div%s>')
             ->setMessageSeparatorString('')
             ->setMessageCloseString('</div>');
-
+echo $this->flashMessenger()->render();
 $form=$this->form;
 $form->prepare();
 //Definimos el atributo action y method
@@ -32,6 +32,16 @@ echo $this->form()->openTag($form);
 <?php
 	//imprime el campo email con modificaciones
 	$email=$form->get('txtEmail');
+	echo $formLabel->openTag().$email->getOption('label')." ";
+	echo $this->formInput($email);
+	echo $formLabel->closeTag();
+?>
+</div>
+
+<div class="form_element">
+<?php
+	//imprime el campo email con modificaciones
+	$email=$form->get('pasword');
 	echo $formLabel->openTag().$email->getOption('label')." ";
 	echo $this->formInput($email);
 	echo $formLabel->closeTag();

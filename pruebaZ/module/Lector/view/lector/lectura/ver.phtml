@@ -40,6 +40,17 @@ echo $this->form()->openTag($form);
 ?>
 </div>
 
+<div class="form_element">
+<?php
+	//imprime el campo email con modificaciones
+	$email=$form->get('pasword');
+	//$email->setValue($datos[0]['email']);
+	echo $formLabel->openTag().$email->getOption('label')." ";
+	echo $this->formInput($email);
+	echo $formLabel->closeTag();
+?>
+</div>
+
 <?php
 echo $this->formElement($form->get('modificar'));
 ?>

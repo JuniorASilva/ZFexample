@@ -41,16 +41,31 @@ class ConexionTable extends TableGateway{
 		return $result;
 	}
 
-	public function setUsuario($nombre,$email){
+	public function setUsuario($nombre,$email,$pasword){
 		$sql = new Sql($this->dbAdapter);
-		$insert = $sql->insert('Usuario');
-		$registro = array(
-			'nombre'=>$nombre,
-			'email'=>$email
-			);
-		$insert->values($registro);
-		$selectString = $sql->getSqlStringForSqlObject($insert);
-		$this->dbAdapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
+		$select = $sql->select();
+		$select->columns(array('nombre','email'))
+			   ->from('Usuario')
+			   ->where(array('email'=>$email));
+		$selectString = $sql->getSqlStringForSqlObject($select);
+		$execute = $this->dbAdapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
+		$result = $execute->toArray();
+
+		if($result){
+			return 0;
+		}
+		else{
+			$insert = $sql->insert('Usuario');
+			$registro = array(
+				'nombre'=>$nombre,
+				'email'=>$email,
+				'pasword'=>$pasword
+				);
+			$insert->values($registro);
+			$selectString = $sql->getSqlStringForSqlObject($insert);
+			$this->dbAdapter->query($selectString, Adapter::QUERY_MODE_EXECUTE);
+			return 1;
+		}
 	}
 
 	public function eliminar($id){
@@ -61,10 +76,10 @@ class ConexionTable extends TableGateway{
 		$this->dbAdapter->query($updateString, Adapter::QUERY_MODE_EXECUTE);
 	}
 
-	public function modificar($nombre,$email,$id){
+	public function modificar($nombre,$email,$pasword,$id){
 		$sql = new Sql($this->dbAdapter);
 		$update = $sql->update('Usuario');
-		$update->set(array('nombre'=>$nombre,'email'=>$email))->where(array('id'=>$id));
+		$update->set(array('nombre'=>$nombre,'email'=>$email,'pasword'=>$pasword))->where(array('id'=>$id));
 		$updateString = $sql->getSqlStringForSqlObject($update);
 		$this->dbAdapter->query($updateString, Adapter::QUERY_MODE_EXECUTE);
 	}

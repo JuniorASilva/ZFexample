@@ -35,11 +35,21 @@ class FormularioUsuario extends Form{
 			),
 		));
 		$this->add(array(
+			'name'=>'pasword',
+			'options'=>array(
+				'label'=>'Password:',
+			),
+			'attributes'=>array(
+				'type'=>'password',
+				'class'=>'input'
+			),
+		));
+		$this->add(array(
 			'name'=>'submit',
 			'attributes'=>array(
 				'class'=>'btn btn-success',
 				'type'=>'submit',
-				'value'=>'Insertar',
+				'value'=>'Registrar',
 				'title'=>'Enviar'
 			)
 		));
