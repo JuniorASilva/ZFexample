@@ -90,8 +90,9 @@ class UsuarioController extends AbstractActionController
          $identi=$this->auth->getStorage()->read();
          if($identi!=false && $identi!=null){
             $datos=$identi;
-            $sesion=new Container('sesion');
+            $sesion=new Container('usuario');
             $sesion->id = $datos->id;
+            //$this->sesion=$datos;
             $form=new FormularioUsuario("form");
 	$form->setAttributes(array(
 	'action'=>$this->getRequest()->getBaseUrl().'/usuario/usuario/envio',
@@ -107,6 +108,9 @@ class UsuarioController extends AbstractActionController
     public function cerrarAction(){
         //Cerramos la sesión borrando los datos de la sesión.
         $this->auth->clearIdentity();
+        $sesion=new Container('usuario');
+        $sesion->id=null;
+        $sesion->email=null;
         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
     }
     public function envioAction(){
@@ -133,5 +137,15 @@ class UsuarioController extends AbstractActionController
     	$transport->setOptions($options);
     	$transport->send($mensaje);
     	return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/dentro');
+    }
+    public function perfilAction(){
+        $sesion=new Container('usuario');
+        if(!is_null($sesion->id)){
+            $data=array('id'=>$sesion->id);
+        }
+        else{
+            $data=array('error'=>'loguese como usuario');
+        }
+        return new ViewModel($data);
     }
 }
