@@ -17,6 +17,8 @@ use Zend\Mail\Message;
 use Zend\Mail\Transport\Smtp as SmtpTransport;
 use Zend\Mail\Transport\SmtpOptions;
 
+use Facebook;
+
 //Incluir modelos
 //use Modulo\Model\Entity\UsuariosModel;
  
