@@ -45,9 +45,8 @@
         </nav>
         <div class="container">
         <?
-            if (defined('RUNNING_FROM_ROOT')) {
-            $this->plugin('basePath')->setBasePath($this->basePath().'/public');
-        }?>
+            if (defined('RUNNING_FROM_ROOT')) {$this->plugin('basePath')->setBasePath($this->basePath().'/public');}
+        ?>
             <?php echo $this->content; ?>
             <hr>
             <footer>
