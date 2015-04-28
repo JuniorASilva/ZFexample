@@ -5,5 +5,5 @@ return array(
     'ZendSkeletonModule\Controller\SkeletonController' => __DIR__ . '/src/ZendSkeletonModule/Controller/SkeletonController.php',
     'ZendSkeletonModuleTest\Framework\TestCase'        => __DIR__ . '/tests/ZendSkeletonModule/Framework/TestCase.php',
     'ZendSkeletonModuleTest\SampleTest'                => __DIR__ . '/tests/ZendSkeletonModule/SampleTest.php',
-    'Facebook'										   => __DIR__ . 'vendor/FB/facebook.php',    
+    'Facebook'										   => __DIR__ . '/vendor/facebook/php-sdk-v4/src/Facebook',
 );

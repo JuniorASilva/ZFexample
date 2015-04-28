@@ -18,9 +18,6 @@ use Zend\Mail\Transport\Smtp as SmtpTransport;
 use Zend\Mail\Transport\SmtpOptions;
 
 use Facebook;
-
-//Incluir modelos
-//use Modulo\Model\Entity\UsuariosModel;
  
 //Incluir formularios
 use Usuario\Form\FormularioUsuario;
@@ -41,6 +38,24 @@ class UsuarioController extends AbstractActionController
 
     public function __construct(){
     	$this->auth = new AuthenticationService();
+    }
+
+    public function facebookAction(){
+        //$facebook = new FacebookSession('1380406485591995','dd0ae4b7ce72a5cad1a61b8a5f25ee16');
+        try{
+            /*$facebook = new FacebookSession(array(
+                'appId' => '1380406485591995',
+                'secret' => 'dd0ae4b7ce72a5cad1a61b8a5f25ee16' ,
+            ));*/
+            //FacebookSession::setDefaultApplication('1380406485591995', 'dd0ae4b7ce72a5cad1a61b8a5f25ee16');
+            /*$helper = new FacebookRedirectLoginHelper('https://www.facebook.com/');
+            $loginUrl = $helper->getLoginUrl();*/
+            //$facebook = new FacebookSession('1380406485591995','dd0ae4b7ce72a5cad1a61b8a5f25ee16');
+        //$facebook = new FacebookSession('1380406485591995');
+        }catch(FacebookRequestException $e){
+            $data = $e;
+        }
+        return new ViewModel(array('error'=>$data));
     }
 
     public function loginAction(){

@@ -47,9 +47,11 @@ echo $this->form()->openTag($form);
 <?php
 echo $this->flashMessenger()->render();
 echo $this->formElement($form->get('submit'));
-echo $this->formElement($form->get('facebook'));
+//echo $this->formElement($form->get('facebook'));
 echo $this->form()->closeTag();
 ?>
+<a class="btn btn-primary" href="<?=$this->basePath()?>/usuario/usuario/facebook">Login con Facebook</a>
+<br>
 <div
   class="fb-like"
   data-share="true"
