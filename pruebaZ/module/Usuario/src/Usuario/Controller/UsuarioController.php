@@ -33,7 +33,9 @@ class UsuarioController extends AbstractActionController
 {
     public function indexAction()
     {
-    	$data= array("holamundo"=>"Hola junior desde Zend2");
+        $form=new FormularioUsuario("form");
+        $url = $this->getRequest()->getBaseUrl();
+    	$data= array("holamundo"=>"Hola junior desde Zend2",'form'=>$form,'url'=>$url);
         return new ViewModel($data);
     }
 
