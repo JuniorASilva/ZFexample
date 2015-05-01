@@ -57,6 +57,7 @@ class ConexionTable extends TableGateway{
 		else{
 			$insert = $sql->insert('Usuario');
 			$registro = array(
+				'id'=>'',
 				'nombre'=>$nombre,
 				'email'=>$email,
 				'pasword'=>$pasword

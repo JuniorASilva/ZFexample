@@ -35,6 +35,11 @@ class UsuarioController extends AbstractActionController
         return new ViewModel($data);
     }
 
+    public function sonyAction()
+    {
+        return new ViewModel(array('hola'=>'hola warra de mrd'));
+    }
+
     public function __construct(){
     	$this->auth = new AuthenticationService();
     }
