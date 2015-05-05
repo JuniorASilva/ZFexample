@@ -139,7 +139,7 @@ class UsuarioController extends AbstractActionController
     	$mensaje = new Message();
     	$mensaje->addTo($destinatario)
     			->addFrom($emisor)
-    			->addEncoding("UTF-8")
+    			//->addEncoding("utf-8")
     			->setSubject('Probando Zend Framework 2')
     			->setBody('Estamos probando zf2');
     	$transport = new SmtpTransport();

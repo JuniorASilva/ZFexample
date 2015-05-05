@@ -13,13 +13,16 @@ use Lector\Model\Form\FormularioUsuario;
 
 use Zend\I18n\Validator as I18nValidator;
 
+
 /**
 * 
 */
 class LecturaController extends AbstractActionController
 {
 	public function indexAction(){
-        $form = new FormularioUsuario();
+        //$form = new FormularioUsuario();
+        $formManager = $this->getServiceLocator()->get('FormElementManager');
+        $form = $formManager->get('FormularioUsuario');
 		$data = array('form'=>$form,'url'=>$this->getRequest()->getBaseUrl());
 		return new ViewModel($data);
 	}

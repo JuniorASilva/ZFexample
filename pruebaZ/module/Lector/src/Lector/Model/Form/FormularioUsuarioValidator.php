@@ -43,12 +43,6 @@ class FormularioUsuarioValidator extends InputFilter
                 array(
                     'name' => 'txtNombre',
                     'validators' => array(
-                        array(
-                            'name' => 'Alnum',
-                            'options' => array(
-                                'allowWhiteSpace' => TRUE,
-                            )
-                        ),
                         array (
 		                    'name' => 'StringLength',
 		                    'options' => array(
