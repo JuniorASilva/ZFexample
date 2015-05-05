@@ -22,7 +22,7 @@ class LecturaController extends AbstractActionController
 	public function indexAction(){
         //$form = new FormularioUsuario();
         $formManager = $this->getServiceLocator()->get('FormElementManager');
-        $form = $formManager->get('FormularioUsuario');
+        $form = $formManager->get('Lector\Model\Form\FormularioUsuario');
 		$data = array('form'=>$form,'url'=>$this->getRequest()->getBaseUrl());
 		return new ViewModel($data);
 	}
