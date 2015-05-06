@@ -1,3 +1,20 @@
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1380406485591995',
+      xfbml      : true,
+      version    : 'v2.3'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 <?php
 /**    if (defined('RUNNING_FROM_ROOT')) {
         $this->plugin('basePath')->setBasePath($this->basePath().'/public');
@@ -38,8 +55,10 @@ echo $this->form()->openTag($form);
 <?php
 echo $this->flashMessenger()->render();
 echo $this->formElement($form->get('submit'));
+//echo $this->formElement($form->get('facebook'));
 echo $this->form()->closeTag();
 ?>
+<<<<<<< HEAD
 
 <script>
   window.fbAsyncInit = function() {
@@ -58,3 +77,13 @@ echo $this->form()->closeTag();
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
+=======
+<a class="btn btn-primary" href="<?=$this->basePath()?>/usuario/usuario/facebook">Login con Facebook</a>
+<br>
+<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
+>>>>>>> 62c538d23748660d809ce307b7d0b5f2eb345668

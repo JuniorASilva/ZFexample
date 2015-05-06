@@ -41,7 +41,32 @@ class FormularioUsuario extends Form
                 'title' => 'Entrar',
                 'class' => 'btn btn-success'
             ),
+        ));        
+        $this->add(array(
+            'name' => 'facebook',
+            'attributes' => array(    
+                'type' => 'button',
+                'value' => 'Login con Facebook',
+                'title' => 'Entrar',
+                'class' => 'btn btn-primary',
+            ),
+        ));     
+        $this->add(array(
+            'name' => 'login2',
+            'attributes' => array(    
+                'type' => 'button',
+                'value' => 'Login',
+                'title' => 'Entrar',
+                'class' => 'btn btn-primary',
+            ),
         ));
-     }
+        $this->add(array(
+        'type' => 'url',
+        'name' => 'login',
+        'options' => array(
+                'label' => 'Login'
+            )
+        ));
+    }
 }
 ?>
