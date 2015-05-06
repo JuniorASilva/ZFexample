@@ -6,10 +6,15 @@ use Zend\Form\Form;
 
 use Lector\Model\Form\FormularioUsuarioValidator;
 
-class FormularioUsuario extends Form{
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
+
+class FormularioUsuario extends Form implements ServiceLocatorAwareInterface{
+	use ServiceLocatorAwareTrait;
 	public function __construct($name=null){
 		parent::__construct($name);
-
+	}
+	public function init(){
 		//insertamos el validator
 		$this->setInputFilter(new FormularioUsuarioValidator());
 
