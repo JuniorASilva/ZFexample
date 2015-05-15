@@ -19,6 +19,7 @@ class FormularioUsuarioValidator extends InputFilter
         $this->add(
                 array(
                     'name' => 'txtEmail',
+                    'required'   => true,
                     'filters' => array(
                         array('name' => 'StripTags'),
                         array('name' => 'StringTrim'),
@@ -27,7 +28,7 @@ class FormularioUsuarioValidator extends InputFilter
                         array(
                             'name' => 'EmailAddress',
                             'options' => array(
-                                'allowWhiteSpace'=>true,
+                                'min' => '18',
                                 'messages' => array(
                                     EmailAddress::INVALID => 'Ingresa un buen email mrd',
                                     EmailAddress::INVALID_FORMAT => 'Email incorrecto',
@@ -42,6 +43,7 @@ class FormularioUsuarioValidator extends InputFilter
         $this->add(
                 array(
                     'name' => 'txtNombre',
+                    'required'   => true,
                     'validators' => array(
                         array (
 		                    'name' => 'StringLength',
@@ -49,6 +51,7 @@ class FormularioUsuarioValidator extends InputFilter
 		                        'encoding' => 'UTF-8',
 		                        'min' => '5',
 		                        'max' => '15',
+                                'allowWhiteSpace'=>true,
 		                        'messages' => array(
 		                        StringLength::INVALID=>'Tu nombre esta mal',
 		                        StringLength::TOO_SHORT=>'Tu nombre debe ser de más de 5 letras',

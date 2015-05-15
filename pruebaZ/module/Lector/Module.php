@@ -1,7 +1,12 @@
 <?php
 namespace Lector;
 
-class Module
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\ModuleManagerInterface;
+use Zend\EventManager\StaticEventManager,
+    Zend\Mvc\Router\RouteMatch;
+
+class Module implements AutoloaderProviderInterface
 {
     public function getConfig()
     {
@@ -18,4 +23,23 @@ class Module
             ),
         );
     }
+
+    public  function  getServiceConfig () 
+    { 
+        return  array ( 
+            'abstract_factories'  =>  array (), 
+            'aliases'  =>  array (
+                'holaService' => 'Lector\Service\Hola_Service',
+                ), 
+            /*'factories'  =>  array (
+                'Lector\Service\Hola_Service' => function () {
+                    //$config = $sm->get('config');
+                    return new \Lector\Service\Hola_Service();
+                }
+            ),*/ 
+            'invokables'  =>  array (), 
+            'services'  =>  array (), 
+            'shared'  =>  array (), 
+        ); 
+    } 
 }

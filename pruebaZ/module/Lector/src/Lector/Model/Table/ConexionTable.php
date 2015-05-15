@@ -42,6 +42,7 @@ class ConexionTable extends TableGateway{
 	}
 
 	public function setUsuario($nombre,$email,$pasword){
+		if(empty($nombre) || empty($email) || empty($pasword)){ return 2; }
 		$sql = new Sql($this->dbAdapter);
 		$select = $sql->select();
 		$select->columns(array('nombre','email'))
