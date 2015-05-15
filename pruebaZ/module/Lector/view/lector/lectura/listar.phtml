@@ -11,7 +11,7 @@ foreach ($this->lista as $usuario) {
         <td><?=$usuario["id"]?></td>
         <td><?=$usuario["email"]?></td>
         <td><?=$usuario["pasword"]?></td>
-        <td><?=$usuario["nombre"]." ".$usuario["apellido"]?></td>
+        <td><?=$usuario["nombre"]?></td>
         <td><a class="btn btn-primary" href="<?=$this->basePath()?>/lector/lectura/ver/<?=$usuario["id"]?>">Modificar</a></td>
         <td><a class="btn btn-danger" href="<?=$this->basePath()?>/lector/lectura/eliminar/<?=$usuario["id"]?>">Eliminar</a></td>
     </tr>

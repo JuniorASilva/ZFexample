@@ -31,11 +31,19 @@ echo $this->form()->openTag($form);
 <div class="form_element">
 <?php
     $email = $form->get('email');
-    echo "Correo: ".$this->formInput($email);
+    echo "Email: ".$this->formInput($email);
     if(isset($error["email"])){
       echo $error["email"]['emailAddressInvalidHostname'];
     }
 ?>
+
+<div>
+  <?php
+  echo 'correo 2:';
+  echo $this->formElement($form->get('email'));
+  ?>
+</div>
+
 </div>
 <div class="form_element">
 <?php
@@ -50,6 +58,26 @@ echo $this->formElement($form->get('submit'));
 //echo $this->formElement($form->get('facebook'));
 echo $this->form()->closeTag();
 ?>
+<<<<<<< HEAD
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1380406485591995',
+      xfbml      : true,
+      version    : 'v2.3'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+=======
 <a class="btn btn-primary" href="<?=$this->basePath()?>/usuario/usuario/facebook">Login con Facebook</a>
 <br>
 <div
@@ -58,3 +86,4 @@ echo $this->form()->closeTag();
   data-width="450"
   data-show-faces="true">
 </div>
+>>>>>>> 62c538d23748660d809ce307b7d0b5f2eb345668
