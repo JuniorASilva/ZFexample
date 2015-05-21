@@ -45,7 +45,6 @@
         </nav>
         <div class="container">
             <?php 
-            if (defined('RUNNING_FROM_ROOT')) {$this->plugin('basePath')->setBasePath($this->basePath().'/public');}
             echo $this->content; 
             ?>
             <hr>

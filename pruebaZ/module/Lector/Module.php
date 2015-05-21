@@ -1,17 +1,30 @@
 <?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
 namespace Lector;
 
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
-use Zend\ModuleManager\ModuleManagerInterface;
-use Zend\EventManager\StaticEventManager,
-    Zend\Mvc\Router\RouteMatch;
+use Zend\Mvc\ModuleRouteListener;
+use Zend\Mvc\MvcEvent;
 
-class Module implements AutoloaderProviderInterface
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\ResultSet\ResultSet;
+
+
+class Module
 {
+
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
     }
+    
+
 
     public function getAutoloaderConfig()
     {
@@ -23,23 +36,20 @@ class Module implements AutoloaderProviderInterface
             ),
         );
     }
+    
+    public function getServiceConfig()
+     {
+         return array(
+             'factories' => array(
+                 'Lector\Model\Table\ConexionTable' =>  function($sm) {
+                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                     return new \Lector\Model\Table\ConexionTable($dbAdapter);
+                 },
+                         
+             ),
+         );
+     }
+ 
+    
 
-    public  function  getServiceConfig () 
-    { 
-        return  array ( 
-            'abstract_factories'  =>  array (), 
-            'aliases'  =>  array (
-                'holaService' => 'Lector\Service\Hola_Service',
-                ), 
-            /*'factories'  =>  array (
-                'Lector\Service\Hola_Service' => function () {
-                    //$config = $sm->get('config');
-                    return new \Lector\Service\Hola_Service();
-                }
-            ),*/ 
-            'invokables'  =>  array (), 
-            'services'  =>  array (), 
-            'shared'  =>  array (), 
-        ); 
-    } 
 }
