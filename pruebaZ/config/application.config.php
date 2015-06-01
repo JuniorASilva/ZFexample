@@ -12,15 +12,16 @@ return array(
         'Visitar',
         'Moel',
         'Lector',
-        'Usuario'
+        'Usuario',
+        'Cron',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
             './module',
-            './vendor'
+            './vendor',
         ),
         'config_glob_paths' => array(
-            'config/autoload/{,*.}{global,local}.php'
-        )
-    )
+            'config/autoload/{,*.}{global,local}.php',
+        ),
+    ),
 );
