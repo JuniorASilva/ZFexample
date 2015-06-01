@@ -11,5 +11,7 @@ class CronController extends AbstractActionController
     public function indexAction()
     {
         echo "hola desde consola" . PHP_EOL;
+        $param = $this->getRequest()->getParam('parametro');
+        echo $param . PHP_EOL;
     }
 }

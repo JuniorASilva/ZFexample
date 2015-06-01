@@ -55,7 +55,7 @@ return array(
             	'cron-prueba' => array(
                     'type' => 'simple',
                     'options' => array(
-                        'route' => 'cron prueba',
+                        'route' => 'cron prueba [<parametro>]',
                         'defaults' => array(
                             'controller' => 'Cron\Controller\Cron',
                             'action' => 'index'

@@ -45,7 +45,6 @@ class Module
                      $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                      return new \Lector\Model\Table\ConexionTable($dbAdapter);
                  },
-                         
              ),
          );
      }
