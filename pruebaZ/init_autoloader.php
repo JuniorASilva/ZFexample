@@ -21,6 +21,9 @@ if (file_exists('vendor/autoload.php')) {
     $loader = include 'vendor/autoload.php';
 }
 
+//define('FACEBOOK_SDK_V4_SRC_DIR', '/vendor/facebook/php-sdk-v4/src/Facebook/');
+require __DIR__ . '/vendor/facebook/php-sdk-v4/autoload.php';
+
 if (class_exists('Zend\Loader\AutoloaderFactory')) {
     return;
 }

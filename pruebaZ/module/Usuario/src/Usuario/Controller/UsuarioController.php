@@ -17,7 +17,11 @@ use Zend\Mail\Message;
 use Zend\Mail\Transport\Smtp as SmtpTransport;
 use Zend\Mail\Transport\SmtpOptions;
 
-use Facebook;
+use Facebook\FacebookSession;
+use Facebook\FacebookRequest;
+use Facebook\GraphUser;
+use Facebook\FacebookRequestException;
+use Facebook\FacebookRedirectLoginHelper;
  
 //Incluir formularios
 use Usuario\Form\FormularioUsuario;
@@ -28,17 +32,15 @@ use Zend\View\Model\ViewModel;
 
 class UsuarioController extends AbstractActionController
 {
+    protected $apikey = '1380406485591995';
+    protected $secretkey = 'dd0ae4b7ce72a5cad1a61b8a5f25ee16';
+
     public function indexAction()
     {
         $form=new FormularioUsuario("form");
         $url = $this->getRequest()->getBaseUrl();
     	$data= array("holamundo"=>"Hola junior desde Zend2",'form'=>$form,'url'=>$url);
         return new ViewModel($data);
-    }
-
-    public function sonyAction()
-    {
-        return new ViewModel(array('hola'=>'hola warra de mrd'));
     }
 
     public function __construct(){
@@ -52,7 +54,32 @@ class UsuarioController extends AbstractActionController
                 'appId' => '1380406485591995',
                 'secret' => 'dd0ae4b7ce72a5cad1a61b8a5f25ee16' ,
             ));*/
-            //FacebookSession::setDefaultApplication('1380406485591995', 'dd0ae4b7ce72a5cad1a61b8a5f25ee16');
+            FacebookSession::setDefaultApplication($apikey, $secretkey);
+            $helper = new FacebookRedirectLoginHelper('http://local.junior.ac/usuario/usuario/');
+            try {
+              $session = $helper->getSessionFromRedirect();
+            } catch(FacebookRequestException $ex) {
+              // When Facebook returns an error
+                $data['error'] = json_encode($ex);
+            } catch(\Exception $ex) {
+              // When validation fails or other local issues
+                $data['error'] = json_encode($ex);
+            }
+            if($session){
+            //$session = $this->HelperFacebook()->getSessionFromRedirect();
+            $token = $session->getAccessToken();
+                $session = new FacebookSession($token);
+                $request = new FacebookRequest($session, 'GET', '/me');
+                $response = $request->execute();$graphObjectClass = $response->getGraphObject(GraphUser::className());
+                $data['id'] = $graphObjectClass->getProperty('id');
+                $data['apodo'] = $graphObjectClass->getProperty('bio');
+                $data['nombre'] = $graphObjectClass->getProperty('first_name');
+                $data['apepat'] = $graphObjectClass->getProperty('last_name');
+                $genero = $graphObjectClass->getProperty('gender');
+                $data['genero'] = ($genero == 'male' ? 2 : 1);
+                $data['email'] = $graphObjectClass->getProperty('email');
+            }
+            else { $data['error'] = 'error';}
             /*$helper = new FacebookRedirectLoginHelper('https://www.facebook.com/');
             $loginUrl = $helper->getLoginUrl();*/
             //$facebook = new FacebookSession('1380406485591995','dd0ae4b7ce72a5cad1a61b8a5f25ee16');
@@ -61,6 +88,13 @@ class UsuarioController extends AbstractActionController
             $data = $e;
         }
         return new ViewModel(array('error'=>$data));
+    }
+
+    private function HelperFacebook()
+    {
+        $facebookHelper = new FacebookRedirectLoginHelper('https://www.facebook.com/login', $this->apikey, $this->secretkey);
+
+        return $facebookHelper;
     }
 
     public function loginAction(){
