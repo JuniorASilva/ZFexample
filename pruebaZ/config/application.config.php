@@ -7,11 +7,11 @@
  */
 return array(
     'modules' => array(
+        'Lector',
         'Application',
         'Modulo',
         'Visitar',
         'Moel',
-        'Lector',
         'Usuario',
         'Cron',
     ),
