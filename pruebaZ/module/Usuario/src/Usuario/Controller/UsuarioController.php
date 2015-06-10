@@ -49,10 +49,10 @@ class UsuarioController extends AbstractActionController
 
     public function facebookAction(){
         session_start();
-        $url = $this->getRequest()->getBaseUrl().'usuario/usuario/facebook';
+        $url = $this->getRequest()->getBaseUrl().'/usuario/usuario/facebook';
         try{
             FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
-            $helper = new FacebookRedirectLoginHelper($url);
+            $helper = new FacebookRedirectLoginHelper('http://local.prueba/usuario/usuario/facebook');
             try {
               $session = $helper->getSessionFromRedirect();
             } catch(FacebookRequestException $ex) {
@@ -75,6 +75,9 @@ class UsuarioController extends AbstractActionController
                 $genero = $graphObjectClass->getProperty('gender');
                 $data['genero'] = ($genero == 'male' ? 2 : 1);
                 $data['email'] = $graphObjectClass->getProperty('email');
+            }else {
+                $loginUrl = $helper->getLoginUrl();
+                return $this->redirect()->toUrl($loginUrl);
             }
             //else { $data['error'] = 'error';}
         }catch(FacebookRequestException $e){
