@@ -2,9 +2,11 @@
 
 	//print_r($this);
 if(!$this->error){	
-echo "Bienvenido ".$this->id;
+echo "Bienvenido Sr. ".$this->name . '<br>';
+echo "Su email es ".$this->email;
 }
 else{
 echo $this->error;
 }
 ?>
+<a class="btn" href="<?=$this->baseUrl?>/usuario/usuario/cerrar">Cerrar Sesion</a>

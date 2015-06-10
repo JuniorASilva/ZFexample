@@ -57,36 +57,54 @@ class UsuarioController extends AbstractActionController
               $session = $helper->getSessionFromRedirect();
             } catch(FacebookRequestException $ex) {
               // When Facebook returns an error
-                $data['error'] = json_encode($ex);
+                $error['error'] = json_encode($ex);
             } catch(\Exception $ex) {
               // When validation fails or other local issues
-                $data['error'] = json_encode($ex);
+                $error['error'] = json_encode($ex);
             }
             if($session){
             //$session = $this->HelperFacebook()->getSessionFromRedirect();
                 $token = $session->getAccessToken();
+                $sesion=new Container('usuario');
                 $session = new FacebookSession($token);
                 $request = new FacebookRequest($session, 'GET', '/me');
                 $response = $request->execute();$graphObjectClass = $response->getGraphObject(GraphUser::className());
-                $data['id'] = $graphObjectClass->getProperty('id');
+                $sesion->id = $graphObjectClass->getProperty('id');
                 $data['apodo'] = $graphObjectClass->getProperty('bio');
-                $data['nombre'] = $graphObjectClass->getProperty('first_name');
+                $sesion->name  = $graphObjectClass->getProperty('first_name');
                 $data['apepat'] = $graphObjectClass->getProperty('last_name');
                 $genero = $graphObjectClass->getProperty('gender');
                 $data['genero'] = ($genero == 'male' ? 2 : 1);
-                $data['email'] = $graphObjectClass->getProperty('email');
+                $sesion->email = $graphObjectClass->getProperty('email');
+                //$sesion->id = $data['id'];
+                //$sesion->name = $data['name'];
+                //$sesion->email = $data['email'];
+                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/perfil');
             }else {
                 $loginUrl = $helper->getLoginUrl();
+                //session_destroy();
                 return $this->redirect()->toUrl($loginUrl);
             }
             //else { $data['error'] = 'error';}
         }catch(FacebookRequestException $e){
-            $data = $e;
+            $error = $e;
         }
         return new ViewModel(array('error'=>$data));
     }
 
+    private function verirficar(){
+        $sesion=new Container('usuario');
+        if(!is_null($sesion->id)){
+            return true;
+        }
+        else
+            return false;
+    }
+
     public function loginAction(){
+        if($this->verirficar()){
+            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/perfil');
+        }
     	$auth = $this->auth;
         $identi=$auth->getStorage()->read();
         if($identi!=false && $identi!=null){
@@ -154,10 +172,13 @@ class UsuarioController extends AbstractActionController
     }
     public function cerrarAction(){
         //Cerramos la sesión borrando los datos de la sesión.
+        session_start();
         $this->auth->clearIdentity();
         $sesion=new Container('usuario');
         $sesion->id=null;
+        $sesion->name=null;
         $sesion->email=null;
+        session_destroy();
         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
     }
     public function envioAction(){
@@ -188,10 +209,13 @@ class UsuarioController extends AbstractActionController
     public function perfilAction(){
         $sesion=new Container('usuario');
         if(!is_null($sesion->id)){
-            $data=array('id'=>$sesion->id);
+            $data=array('id'=>$sesion->id,
+                'name'=>$sesion->name,
+                'email'=>$sesion->email,
+                'baseUrl'=>$this->getRequest()->getBaseUrl());
         }
         else{
-            $data=array('error'=>'loguese como usuario');
+            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
         }
         return new ViewModel($data);
     }
