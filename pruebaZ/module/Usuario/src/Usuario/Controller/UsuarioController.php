@@ -48,14 +48,11 @@ class UsuarioController extends AbstractActionController
     }
 
     public function facebookAction(){
-        //$facebook = new FacebookSession('1380406485591995','dd0ae4b7ce72a5cad1a61b8a5f25ee16');
+        session_start();
+        $url = $this->getRequest()->getBaseUrl().'usuario/usuario/facebook';
         try{
-            /*$facebook = new FacebookSession(array(
-                'appId' => '1380406485591995',
-                'secret' => 'dd0ae4b7ce72a5cad1a61b8a5f25ee16' ,
-            ));*/
-            FacebookSession::setDefaultApplication($apikey, $secretkey);
-            $helper = new FacebookRedirectLoginHelper('http://local.junior.ac/usuario/usuario/');
+            FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
+            $helper = new FacebookRedirectLoginHelper($url);
             try {
               $session = $helper->getSessionFromRedirect();
             } catch(FacebookRequestException $ex) {
@@ -67,7 +64,7 @@ class UsuarioController extends AbstractActionController
             }
             if($session){
             //$session = $this->HelperFacebook()->getSessionFromRedirect();
-            $token = $session->getAccessToken();
+                $token = $session->getAccessToken();
                 $session = new FacebookSession($token);
                 $request = new FacebookRequest($session, 'GET', '/me');
                 $response = $request->execute();$graphObjectClass = $response->getGraphObject(GraphUser::className());
@@ -79,22 +76,11 @@ class UsuarioController extends AbstractActionController
                 $data['genero'] = ($genero == 'male' ? 2 : 1);
                 $data['email'] = $graphObjectClass->getProperty('email');
             }
-            else { $data['error'] = 'error';}
-            /*$helper = new FacebookRedirectLoginHelper('https://www.facebook.com/');
-            $loginUrl = $helper->getLoginUrl();*/
-            //$facebook = new FacebookSession('1380406485591995','dd0ae4b7ce72a5cad1a61b8a5f25ee16');
-        //$facebook = new FacebookSession('1380406485591995');
+            //else { $data['error'] = 'error';}
         }catch(FacebookRequestException $e){
             $data = $e;
         }
         return new ViewModel(array('error'=>$data));
-    }
-
-    private function HelperFacebook()
-    {
-        $facebookHelper = new FacebookRedirectLoginHelper('https://www.facebook.com/login', $this->apikey, $this->secretkey);
-
-        return $facebookHelper;
     }
 
     public function loginAction(){
@@ -139,7 +125,7 @@ class UsuarioController extends AbstractActionController
            }
         }
         $view = new ViewModel(
-                array("form"=>$form)
+                array("form"=>$form,'url'=>$uri)
                 );
         return $view;
     }
