@@ -15,7 +15,7 @@ return array(
     // ...
     'db' => array(
         'driver'         => 'Pdo',
-        'dsn'            => 'mysql:dbname=Usuario;host=localhost',
+        'dsn'            => 'mysql:dbname=Junior;host=localhost',
         'username' => 'root',
         'password' => 'Jsilvap22',            
         'driver_options' => array(

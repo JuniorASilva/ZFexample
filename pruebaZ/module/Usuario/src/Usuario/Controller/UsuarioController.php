@@ -22,6 +22,9 @@ use Facebook\FacebookRequest;
 use Facebook\GraphUser;
 use Facebook\FacebookRequestException;
 use Facebook\FacebookRedirectLoginHelper;
+
+
+//use Zend\Uri\Uri;
  
 //Incluir formularios
 use Usuario\Form\FormularioUsuario;
@@ -32,8 +35,8 @@ use Zend\View\Model\ViewModel;
 
 class UsuarioController extends AbstractActionController
 {
-    protected $apikey = '1380406485591995';
-    protected $secretkey = 'dd0ae4b7ce72a5cad1a61b8a5f25ee16';
+    protected $apikey = '814247185360522';
+    protected $secretkey = 'bb53b80df1d8e36db8811030abbca8a1';
 
     public function indexAction()
     {
@@ -49,7 +52,8 @@ class UsuarioController extends AbstractActionController
 
     public function facebookAction(){
         session_start();
-        $url = $this->getRequest()->getBaseUrl().'/usuario/usuario/facebook';
+        //$url = $this->getRequest()->getUri();
+        //$url = 'http://' . $this->getRequest()->getServer('HTTP_HOST') . '/usuario/usuario/facebook';
         try{
             FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
             $helper = new FacebookRedirectLoginHelper('http://local.prueba/usuario/usuario/facebook');
