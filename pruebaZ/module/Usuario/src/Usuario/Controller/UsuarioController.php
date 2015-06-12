@@ -23,6 +23,9 @@ use Facebook\GraphUser;
 use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 use Facebook\FacebookRedirectLoginHelper;
+
+
+//use Zend\Uri\Uri;
  
 //Incluir formularios
 use Usuario\Form\FormularioUsuario;
@@ -33,8 +36,8 @@ use Zend\View\Model\ViewModel;
 
 class UsuarioController extends AbstractActionController
 {
-    protected $apikey = '1380406485591995';
-    protected $secretkey = 'dd0ae4b7ce72a5cad1a61b8a5f25ee16';
+    protected $apikey = '814247185360522';
+    protected $secretkey = 'bb53b80df1d8e36db8811030abbca8a1';
 
     public function indexAction()
     {
@@ -50,7 +53,8 @@ class UsuarioController extends AbstractActionController
 
     public function facebookAction(){
         session_start();
-        $url = $this->getRequest()->getBaseUrl().'/usuario/usuario/facebook';
+        //$url = $this->getRequest()->getUri();
+        //$url = 'http://' . $this->getRequest()->getServer('HTTP_HOST') . '/usuario/usuario/facebook';
         try{
             FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
             $helper = new FacebookRedirectLoginHelper('http://local.prueba/usuario/usuario/facebook');
@@ -58,37 +62,60 @@ class UsuarioController extends AbstractActionController
               $session = $helper->getSessionFromRedirect();
             } catch(FacebookRequestException $ex) {
               // When Facebook returns an error
-                $data['error'] = json_encode($ex);
+                $error['error'] = json_encode($ex);
             } catch(\Exception $ex) {
               // When validation fails or other local issues
-                $data['error'] = json_encode($ex);
+                $error['error'] = json_encode($ex);
             }
             if($session){
             //$session = $this->HelperFacebook()->getSessionFromRedirect();
                 $token = $session->getAccessToken();
+                $sesion=new Container('usuario');
                 $session = new FacebookSession($token);
                 $request = new FacebookRequest($session, 'GET', '/me');
+<<<<<<< HEAD
                 $response = $request->execute();
                 $graphObjectClass = $response->getGraphObject(GraphUser::className());
                 $data['id'] = $graphObjectClass->getProperty('id');
+=======
+                $response = $request->execute();$graphObjectClass = $response->getGraphObject(GraphUser::className());
+                $sesion->id = $graphObjectClass->getProperty('id');
+>>>>>>> 1b384bde06baa4c8fbe94030a9a2e7d374025f01
                 $data['apodo'] = $graphObjectClass->getProperty('bio');
-                $data['nombre'] = $graphObjectClass->getProperty('first_name');
+                $sesion->name  = $graphObjectClass->getProperty('first_name');
                 $data['apepat'] = $graphObjectClass->getProperty('last_name');
                 $genero = $graphObjectClass->getProperty('gender');
                 $data['genero'] = ($genero == 'male' ? 2 : 1);
-                $data['email'] = $graphObjectClass->getProperty('email');
+                $sesion->email = $graphObjectClass->getProperty('email');
+                //$sesion->id = $data['id'];
+                //$sesion->name = $data['name'];
+                //$sesion->email = $data['email'];
+                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/perfil');
             }else {
                 $loginUrl = $helper->getLoginUrl();
+                //session_destroy();
                 return $this->redirect()->toUrl($loginUrl);
             }
             //else { $data['error'] = 'error';}
         }catch(FacebookRequestException $e){
-            $data = $e;
+            $error = $e;
         }
         return new ViewModel(array('error'=>$data));
     }
 
+    private function verirficar(){
+        $sesion=new Container('usuario');
+        if(!is_null($sesion->id)){
+            return true;
+        }
+        else
+            return false;
+    }
+
     public function loginAction(){
+        if($this->verirficar()){
+            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/perfil');
+        }
     	$auth = $this->auth;
         $identi=$auth->getStorage()->read();
         if($identi!=false && $identi!=null){
@@ -156,10 +183,13 @@ class UsuarioController extends AbstractActionController
     }
     public function cerrarAction(){
         //Cerramos la sesión borrando los datos de la sesión.
+        session_start();
         $this->auth->clearIdentity();
         $sesion=new Container('usuario');
         $sesion->id=null;
+        $sesion->name=null;
         $sesion->email=null;
+        session_destroy();
         return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
     }
     public function envioAction(){
@@ -190,10 +220,13 @@ class UsuarioController extends AbstractActionController
     public function perfilAction(){
         $sesion=new Container('usuario');
         if(!is_null($sesion->id)){
-            $data=array('id'=>$sesion->id);
+            $data=array('id'=>$sesion->id,
+                'name'=>$sesion->name,
+                'email'=>$sesion->email,
+                'baseUrl'=>$this->getRequest()->getBaseUrl());
         }
         else{
-            $data=array('error'=>'loguese como usuario');
+            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
         }
         return new ViewModel($data);
     }

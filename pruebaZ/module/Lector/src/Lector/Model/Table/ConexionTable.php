@@ -6,23 +6,30 @@ use Zend\Db\Adapter\Adapter;
 
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
-use Urb\Db\Table\AbstractTable;
+//use Urb\Db\Table\AbstractTable;
 use Zend\Db\ResultSet\ResultSet;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\TableGateway\AbstractTableGateway;
 
-class ConexionTable extends AbstractTableGateway{
-	protected $table ='usuario';	/*public function __construct(Adapter $adapter = null, $database = null, ResultSet $selectResult = null){
+class ConexionTable extends TableGateway{
+	protected $table ='usuario';
+	private $dbAdapter;
+	public function __construct(Adapter $adapter = null, $databaseSchema = null, ResultSet $selectResultPrototype = null){
+		$this->dbAdapter=$adapter;
+		return parent::__construct('usuario', $this->dbAdapter, $databaseSchema,$selectResultPrototype);
+    }
+
+	/*public function __construct(Adapter $adapter = null, $database = null, ResultSet $selectResult = null){
 		$this->dbAdapter = $adapter;
 		return parent::__construct('usuario',$this->dbAdapter,$database,$selectResult);
 	}*/
 
-	public function __construct(Adapter $adapter)
+	/*public function __construct(Adapter $adapter)
     {
-        $this->adapter = $adapter;
+        $this->dbAdapter = $adapter;
         $this->initialize();
-    }
+    }*/
 
 
 
@@ -68,7 +75,6 @@ class ConexionTable extends AbstractTableGateway{
 		else{
 			$insert = $sql->insert('usuario');
 			$registro = array(
-				'id'=>'',
 				'nombre'=>$nombre,
 				'email'=>$email,
 				'pasword'=>$pasword

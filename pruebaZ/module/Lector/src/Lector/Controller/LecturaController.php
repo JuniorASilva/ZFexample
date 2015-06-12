@@ -7,7 +7,7 @@ use Zend\View\Model\ViewModel;
 
 use Zend\Db\Adapter\Adapter;
 
-//use Lector\Model\Table\ConexionTable;
+use Lector\Model\Table\ConexionTable;
 
 //use Lector\Model\Form\FormularioUsuario;
 
