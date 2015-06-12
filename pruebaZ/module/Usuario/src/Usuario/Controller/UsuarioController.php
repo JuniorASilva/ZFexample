@@ -36,8 +36,8 @@ use Zend\View\Model\ViewModel;
 
 class UsuarioController extends AbstractActionController
 {
-    protected $apikey = '814247185360522';
-    protected $secretkey = 'bb53b80df1d8e36db8811030abbca8a1';
+    protected $apikey = '1380406485591995';
+    protected $secretkey = 'dd0ae4b7ce72a5cad1a61b8a5f25ee16';
 
     public function indexAction()
     {
@@ -57,7 +57,7 @@ class UsuarioController extends AbstractActionController
         //$url = 'http://' . $this->getRequest()->getServer('HTTP_HOST') . '/usuario/usuario/facebook';
         try{
             FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
-            $helper = new FacebookRedirectLoginHelper('http://local.prueba/usuario/usuario/facebook');
+            $helper = new FacebookRedirectLoginHelper('http://backendj.hol.es/usuario/usuario/facebook');
             try {
               $session = $helper->getSessionFromRedirect();
             } catch(FacebookRequestException $ex) {
@@ -73,14 +73,14 @@ class UsuarioController extends AbstractActionController
                 $sesion=new Container('usuario');
                 $session = new FacebookSession($token);
                 $request = new FacebookRequest($session, 'GET', '/me');
-<<<<<<< HEAD
+//<<<<<<< HEAD
                 $response = $request->execute();
                 $graphObjectClass = $response->getGraphObject(GraphUser::className());
                 $data['id'] = $graphObjectClass->getProperty('id');
-=======
+//=======
                 $response = $request->execute();$graphObjectClass = $response->getGraphObject(GraphUser::className());
                 $sesion->id = $graphObjectClass->getProperty('id');
->>>>>>> 1b384bde06baa4c8fbe94030a9a2e7d374025f01
+//>>>>>>> 1b384bde06baa4c8fbe94030a9a2e7d374025f01
                 $data['apodo'] = $graphObjectClass->getProperty('bio');
                 $sesion->name  = $graphObjectClass->getProperty('first_name');
                 $data['apepat'] = $graphObjectClass->getProperty('last_name');
@@ -157,7 +157,7 @@ class UsuarioController extends AbstractActionController
            }
         }
         $view = new ViewModel(
-                array("form"=>$form,'url'=>$uri)
+                array("form"=>$form)
                 );
         return $view;
     }
