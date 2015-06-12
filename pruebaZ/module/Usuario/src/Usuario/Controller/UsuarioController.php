@@ -68,28 +68,21 @@ class UsuarioController extends AbstractActionController
                 $error['error'] = json_encode($ex);
             }
             if($session){
-            //$session = $this->HelperFacebook()->getSessionFromRedirect();
                 $token = $session->getAccessToken();
                 $sesion=new Container('usuario');
                 $session = new FacebookSession($token);
                 $request = new FacebookRequest($session, 'GET', '/me');
-//<<<<<<< HEAD
                 $response = $request->execute();
                 $graphObjectClass = $response->getGraphObject(GraphUser::className());
                 $data['id'] = $graphObjectClass->getProperty('id');
-//=======
                 $response = $request->execute();$graphObjectClass = $response->getGraphObject(GraphUser::className());
                 $sesion->id = $graphObjectClass->getProperty('id');
-///>>>>>>> 1b384bde06baa4c8fbe94030a9a2e7d374025f01
                 $data['apodo'] = $graphObjectClass->getProperty('bio');
                 $sesion->name  = $graphObjectClass->getProperty('first_name');
                 $data['apepat'] = $graphObjectClass->getProperty('last_name');
                 $genero = $graphObjectClass->getProperty('gender');
                 $data['genero'] = ($genero == 'male' ? 2 : 1);
                 $sesion->email = $graphObjectClass->getProperty('email');
-                //$sesion->id = $data['id'];
-                //$sesion->name = $data['name'];
-                //$sesion->email = $data['email'];
                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/perfil');
             }else {
                 $loginUrl = $helper->getLoginUrl();
