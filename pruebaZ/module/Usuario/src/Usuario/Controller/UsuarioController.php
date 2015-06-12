@@ -20,6 +20,7 @@ use Zend\Mail\Transport\SmtpOptions;
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\GraphUser;
+use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 use Facebook\FacebookRedirectLoginHelper;
  
@@ -67,7 +68,8 @@ class UsuarioController extends AbstractActionController
                 $token = $session->getAccessToken();
                 $session = new FacebookSession($token);
                 $request = new FacebookRequest($session, 'GET', '/me');
-                $response = $request->execute();$graphObjectClass = $response->getGraphObject(GraphUser::className());
+                $response = $request->execute();
+                $graphObjectClass = $response->getGraphObject(GraphUser::className());
                 $data['id'] = $graphObjectClass->getProperty('id');
                 $data['apodo'] = $graphObjectClass->getProperty('bio');
                 $data['nombre'] = $graphObjectClass->getProperty('first_name');
