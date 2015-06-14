@@ -51,6 +51,63 @@ class UsuarioController extends AbstractActionController
     	$this->auth = new AuthenticationService();
     }
 
+    public function facebookaAction(){
+        session_start();
+        try{
+            FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
+            $helper = new FacebookRedirectLoginHelper('http://local.prueba/usuario/usuario/oaut');
+            $loginUrl = $helper->getLoginUrl();
+                //session_destroy();
+            try {
+              $session = $helper->getSessionFromRedirect();
+            } catch(FacebookRequestException $ex) {
+              // When Facebook returns an error
+                $error['error'] = json_encode($ex);
+            } catch(\Exception $ex) {
+              // When validation fails or other local issues
+                $error['error'] = json_encode($ex);
+            }
+            if($session){
+                }else {
+                    return $this->redirect()->toUrl($loginUrl);
+                }
+            //else { $data['error'] = 'error';}
+        }catch(FacebookRequestException $e){
+            $error = $e;
+        }
+        return new ViewModel(array('error' => json_encode($error)));
+    }
+
+    public function oautAction(){
+        FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
+        $helper = new FacebookRedirectLoginHelper('http://local.prueba/usuario/usuario/facebook');
+        try{
+            $session = $helper->getSessionFromRedirect();
+            if($session){
+                $token = $session->getAccessToken();
+                $sesion=new Container('usuario');
+                $session = new FacebookSession($token);
+                $request = new FacebookRequest($session, 'GET', '/me');
+                $response = $request->execute();
+                $graphObjectClass = $response->getGraphObject(GraphUser::className());
+                $data['id'] = $graphObjectClass->getProperty('id');
+                $response = $request->execute();$graphObjectClass = $response->getGraphObject(GraphUser::className());
+                $sesion->id = $graphObjectClass->getProperty('id');
+                $data['apodo'] = $graphObjectClass->getProperty('bio');
+                $sesion->name  = $graphObjectClass->getProperty('first_name');
+                $data['apepat'] = $graphObjectClass->getProperty('last_name');
+                $genero = $graphObjectClass->getProperty('gender');
+                $data['genero'] = ($genero == 'male' ? 2 : 1);
+                $sesion->email = $graphObjectClass->getProperty('email');
+                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/perfil');
+            }
+        }
+        catch(FacebookRequestException $e){
+            $error = $e;
+        }
+        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/facebook');
+    }
+
     public function facebookAction(){
         session_start();
         //$url = $this->getRequest()->getUri();
@@ -109,7 +166,11 @@ class UsuarioController extends AbstractActionController
         if($this->verirficar()){
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/perfil');
         }
-    	$auth = $this->auth;
+
+        FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
+        $helper = new FacebookRedirectLoginHelper('http://local.prueba/usuario/usuario/facebook');
+    	
+        $auth = $this->auth;
         $identi=$auth->getStorage()->read();
         if($identi!=false && $identi!=null){
            return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/dentro');
@@ -150,7 +211,7 @@ class UsuarioController extends AbstractActionController
            }
         }
         $view = new ViewModel(
-                array("form"=>$form)
+                array("form"=>$form,'helper'=>$helper)
                 );
         return $view;
     }

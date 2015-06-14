@@ -53,7 +53,7 @@ echo $this->form()->closeTag();
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
-<a class="btn btn-primary" href="<?=$this->basePath()?>/usuario/usuario/facebook">Login con Facebook</a>
+<a class="btn btn-primary" href="<?=$helper->getLoginUrl()?>">Login con Facebook</a>
 <br>
 <div
   class="fb-like"
