@@ -73,14 +73,11 @@ class UsuarioController extends AbstractActionController
                 $sesion=new Container('usuario');
                 $session = new FacebookSession($token);
                 $request = new FacebookRequest($session, 'GET', '/me');
-<<<<<<< HEAD
                 $response = $request->execute();
                 $graphObjectClass = $response->getGraphObject(GraphUser::className());
                 $data['id'] = $graphObjectClass->getProperty('id');
-=======
                 $response = $request->execute();$graphObjectClass = $response->getGraphObject(GraphUser::className());
                 $sesion->id = $graphObjectClass->getProperty('id');
->>>>>>> 1b384bde06baa4c8fbe94030a9a2e7d374025f01
                 $data['apodo'] = $graphObjectClass->getProperty('bio');
                 $sesion->name  = $graphObjectClass->getProperty('first_name');
                 $data['apepat'] = $graphObjectClass->getProperty('last_name');
