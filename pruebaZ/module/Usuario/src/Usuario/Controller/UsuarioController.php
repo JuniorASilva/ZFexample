@@ -88,9 +88,9 @@ class UsuarioController extends AbstractActionController
                 //$sesion->email = $data['email'];
                 return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/perfil');
             }else {
-                $loginUrl = $helper->getLoginUrl();
+                //$loginUrl = $helper->getLoginUrl();
                 //session_destroy();
-                return $this->redirect()->toUrl($loginUrl);
+                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
             }
             //else { $data['error'] = 'error';}
         }catch(FacebookRequestException $e){
@@ -112,6 +112,10 @@ class UsuarioController extends AbstractActionController
         if($this->verirficar()){
             return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/perfil');
         }
+
+        FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
+        $helper = new FacebookRedirectLoginHelper('http://backendj.hol.es/usuario/usuario/facebook');
+
     	$auth = $this->auth;
         $identi=$auth->getStorage()->read();
         if($identi!=false && $identi!=null){
@@ -153,7 +157,7 @@ class UsuarioController extends AbstractActionController
            }
         }
         $view = new ViewModel(
-                array("form"=>$form)
+                array("form"=>$form,'helper'=>$helper)
                 );
         return $view;
     }
@@ -179,6 +183,10 @@ class UsuarioController extends AbstractActionController
     }
     public function cerrarAction(){
         //Cerramos la sesión borrando los datos de la sesión.
+        FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
+        $helper = new FacebookRedirectLoginHelper('http://backendj.hol.es/usuario/usuario/facebook');
+        $params = array( 'next' => 'http://backendj.hol.es/usuario/usuario/login' );
+        
         session_start();
         $this->auth->clearIdentity();
         $sesion=new Container('usuario');
@@ -186,7 +194,7 @@ class UsuarioController extends AbstractActionController
         $sesion->name=null;
         $sesion->email=null;
         session_destroy();
-        return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
+        return $this->redirect()->toUrl($helper->getSessionFromRedirect(),$helper->getLogoutUrl($params));
     }
     public function envioAction(){
     	$emisor = 'jsilvap22@gmail.com';
