@@ -22,6 +22,7 @@ use Facebook\FacebookRequest;
 use Facebook\GraphUser;
 use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
+use Facebook\FacebookException;
 use Facebook\FacebookRedirectLoginHelper;
 
 
@@ -62,10 +63,12 @@ class UsuarioController extends AbstractActionController
               $session = $helper->getSessionFromRedirect();
             } catch(FacebookRequestException $ex) {
               // When Facebook returns an error
-                $error['error'] = json_encode($ex);
+                $error['1'] = json_encode($ex);
             } catch(\Exception $ex) {
               // When validation fails or other local issues
-                $error['error'] = json_encode($ex);
+                $error['2'] = json_encode($ex);
+            } catch (FacebookException $ex){
+                $error['4'] = json_encode($ex);
             }
             if($session){
                 $token = $session->getAccessToken();
@@ -90,13 +93,13 @@ class UsuarioController extends AbstractActionController
             }else {
                 //$loginUrl = $helper->getLoginUrl();
                 //session_destroy();
-                return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
+                //return $this->redirect()->toUrl($this->getRequest()->getBaseUrl().'/usuario/usuario/login');
             }
             //else { $data['error'] = 'error';}
         }catch(FacebookRequestException $e){
-            $error = $e;
+            $error['3'] = json_encode($e);
         }
-        return new ViewModel(array('error'=>$data));
+        return new ViewModel(array('error'=>$error));
     }
 
     private function verirficar(){
