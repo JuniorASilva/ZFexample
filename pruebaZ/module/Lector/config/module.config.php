@@ -6,7 +6,7 @@ return array(
         ),
     ),
     'router' => array(
-        'routes' => array(
+        'routes' => array(/*
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -16,7 +16,7 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
-            ),
+            ),*/
         	'lector' => array(
                 'type'    => 'Literal',
                 'options' => array(
