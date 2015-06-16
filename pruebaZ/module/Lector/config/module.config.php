@@ -7,6 +7,16 @@ return array(
     ),
     'router' => array(
         'routes' => array(
+            'home' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/',
+                    'defaults' => array(
+                        'controller' => 'Lector\Controller\Lectura',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
         	'lector' => array(
                 'type'    => 'Literal',
                 'options' => array(

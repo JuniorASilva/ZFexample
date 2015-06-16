@@ -10,6 +10,7 @@
 namespace Prueba\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class PruebaController extends AbstractActionController
 {
@@ -20,8 +21,10 @@ class PruebaController extends AbstractActionController
 
     public function fooAction()
     {
-        // This shows the :controller and :action parameters in default route
-        // are working when you browse to /module-specific-root/skeleton/foo
-        return array();
+        $this->dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+        $usuarios = new \Lector\Model\Table\ConexionTable($this->dbAdapter);
+        $conex = $usuarios->getUsuario();
+        return new ViewModel(array('lista'=>$conex));
+        //return array();
     }
 }
