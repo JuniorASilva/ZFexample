@@ -56,7 +56,7 @@ class UsuarioController extends AbstractActionController
         try{
             FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
             $helper = new FacebookRedirectLoginHelper('http://local.prueba/usuario/usuario/oaut');
-            $loginUrl = $helper->getLoginUrl();
+            //$loginUrl = $helper->getLoginUrl();
                 //session_destroy();
             try {
               $session = $helper->getSessionFromRedirect();
@@ -114,7 +114,7 @@ class UsuarioController extends AbstractActionController
         //$url = 'http://' . $this->getRequest()->getServer('HTTP_HOST') . '/usuario/usuario/facebook';
         try{
             FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
-            $helper = new FacebookRedirectLoginHelper('http://local.prueba/usuario/usuario/facebook');
+            $helper = new FacebookRedirectLoginHelper('/usuario/usuario/facebook');
             try {
               $session = $helper->getSessionFromRedirect();
             } catch(FacebookRequestException $ex) {
@@ -168,7 +168,7 @@ class UsuarioController extends AbstractActionController
         }
 
         FacebookSession::setDefaultApplication($this->apikey, $this->secretkey);
-        $helper = new FacebookRedirectLoginHelper('http://local.prueba/usuario/usuario/facebook');
+        $helper = new FacebookRedirectLoginHelper('/usuario/usuario/facebook');
     	
         $auth = $this->auth;
         $identi=$auth->getStorage()->read();
