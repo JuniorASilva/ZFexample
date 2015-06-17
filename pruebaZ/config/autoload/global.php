@@ -15,9 +15,9 @@ return array(
     // ...
     'db' => array(
         'driver' => 'pdo_mysql',
-        'hostname' => 'localhost',
-        'database' => 'Junior',
-        'username' => 'root',
+        'hostname' => 'mysql.hostinger.es',
+        'database' => 'u977737126_bd',
+        'username' => 'u977737126_user',
         'password' => 'Jsilvap22',
         'port' => '3306',
         'options' => array('buffer_results' => true),
